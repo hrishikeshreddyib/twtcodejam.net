@@ -63,7 +63,7 @@ class JudgeView(View):
                     new_member["avatar_url"] = avatar_url
                     new_member["username"] = user.extra_data["username"]
                     new_member["discriminator"] = user.extra_data["discriminator"]
-                discord_members.append(new_member)
+                    discord_members.append(new_member)
             submission.team.discord_members = discord_members
 
             submission.judges = [vote.user for vote in submission.votes.all()]
