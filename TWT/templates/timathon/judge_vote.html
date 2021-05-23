@@ -1,0 +1,117 @@
+{% extends 'base/base.html' %}
+{% load socialaccount %}
+{% load static %}
+
+{% block stylesheets %}
+{% endblock %}
+{% block title %}Judging{% endblock %}
+{% block content %}
+    {% include "base/navbar.html" %}
+    <div class="jumbotron" style="margin-top: 2%; margin-left: 4%; margin-right: 4%">
+    
+        <a class="btn btn-dark git-link" href="{{ submission.github_link }}"
+            title="{{ submission.github_link }}" target="_blank">GitHub</a><br><br>
+
+        <h1 class="display-4">Welcome to the judging panel!</h1>
+        <hr class="my-4">
+        <form method="post" action="{% url 'timathon:JudgeVote' submission.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="c1">Criteria 1 - How well polished is the project?</label>
+                <select class="form-control" id="c1" name="c1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="c2">Criteria 2 - How well does the project fit the theme? (Theme: {{ submission.challenge.title }})</label>
+                <select class="form-control" id="c2" name="c2">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="c3">Criteria 3 - How usable/practical is the project?</label>
+                <select class="form-control" id="c3" name="c3">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="c4">Criteria 4</label>
+                <select class="form-control" id="c4" name="c4">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="c5">Criteria 5</label>
+                <select class="form-control" id="c5" name="c5">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="notes" class="control-label"><strong>Extra notes:</strong></label>
+                <input id="notes" name="notes" type="text" class="form-control">
+            </div>
+
+
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <br>
+        </form>
+    </div>
+    <script>
+    function autoGrow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+    }
+    </script>
+
+{% endblock %}

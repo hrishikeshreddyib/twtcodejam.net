@@ -73,6 +73,9 @@
                         {% endif %}
                     {% endif %}
                 {% endif %}
+                {% if is_staff %}
+                    <a class="btn btn-info" href="{% url "timathon:Judge" %}">Judge</a>
+                {% endif %}
             </div>
             <hr>
 

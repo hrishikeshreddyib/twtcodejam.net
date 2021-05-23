@@ -27,19 +27,15 @@
                     {% endfor %}
                 </div>
                 {% if not challenge.voting_status %}
-                    <span class="text-white">Votes: {{ submission.team.votes }}</span>
-                {% else %}
-                    {% if user not in submission.team.members.all %}
-                        {% if user not in submission.team.voted_by.all %}
-                            <a class="btn btn-dark" href="{% url "timathon:VoteTeam" submission.team.ID %}">Vote</a>
-                        {% else %}
-                            <a class="btn btn-dark" href="{% url "timathon:UnvoteTeam" submission.team.ID %}">Unvote</a>
-                        {% endif %}
+                    <span class="text-white">Score:
+                    {% if not submission.points %}
+                        Not graded
+                    {% else %}
+                        {{ submission.points|floatformat:1 }}
                     {% endif %}
+                    </span>
                 {% endif %}
             </div>
         {% endfor %}
     </div>
-
-
 {% endblock %}

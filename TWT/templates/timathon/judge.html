@@ -1,0 +1,175 @@
+{% extends 'base/base.html' %}
+{% load socialaccount %}
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/judge_home.css' %}">
+{% endblock %}
+
+{% block title %}Code Jam Judging{% endblock %}
+{% block content %}
+{% include "base/navbar.html" %}
+
+<div class="accordion" id="submission_list">
+  <div class="card bg-transparent">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#pending" aria-expanded="true" aria-controls="pending">
+          Pending
+        </button>
+      </h2>
+    </div>
+
+    <div id="pending" class="collapse show" aria-labelledby="headingOne" data-parent="#submission_list">
+      <div class="card-body">
+
+        <div class="containers">
+          {% for submission in submissions %}
+          {% if user not in submission.judges %}
+            <br>
+            <div class="submission-view-container">
+                <h2><b>{{ submission.team.name }}</b></h2><br>
+                <p class="text-white" style="font-size: large;">{{ submission.description }}</p><br>
+                <a class="btn btn-dark git-link" href="{{ submission.github_link }}"
+                    title="{{ submission.github_link }}" target="_blank">GitHub</a><br><br>
+                <div class="members-list">
+                    {% for team_member in submission.team.discord_members %}
+                        <div class="member">
+                            <img style="border-radius: 50%; width: 45px;" class="pfp" src="{{ team_member.avatar_url }}"
+                                  alt="pfp">
+                            <p style="font-weight: bold;" class="text-white title">{{ team_member.username }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div>
+                  <table class="table table-dark">
+                    <thead>
+                        <tr>
+                        <th scope="col">Judge</th>
+                        <th scope="col">C1</th>
+                        <th scope="col">C2</th>
+                        <th scope="col">C3</th>
+                        <th scope="col">C4</th>
+                        <th scope="col">C5</th>
+                        <th scope="col">Notes</tr>  
+                    </thead>
+                    <tbody>
+                    {% for vote in submission.votes.all %}
+                        <tr>
+                        <th scope="row">{{ vote.user.username }}</th>
+                        <td>{{ vote.c1 }}</td>
+                        <td>{{ vote.c2 }}</td>
+                        <td>{{ vote.c3 }}</td>
+                        <td>{{ vote.c4 }}</td>
+                        <td>{{ vote.c5 }}</td>
+                        <td>{{ vote.notes }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+
+                <span class="text-white">Score:
+                {% if not submission.points %}
+                  Not graded
+                {% else %}
+                  {{ submission.points|floatformat:1 }}
+                {% endif %}
+                </span>
+
+                <br>
+                {% if challenge.voting_status %}
+                  {% if user not in submission.team.members.all and user not in submission.judges %}
+                    <a class="btn btn-info" style="margin-right: 10px;" href="{% url 'timathon:JudgeVote' submission.id %}">Judge</a>
+                  {% endif %}
+                {% endif %}
+            </div>
+          {% endif %}
+          {% empty %}
+            <div class="container" style="margin-top: 2%;">
+              <h1 class="display-4 text-center">There are no pending submissions to be</h1>
+            </div>
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-transparent">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#completed" aria-expanded="false" aria-controls="completed">
+          Completed
+        </button>
+      </h2>
+    </div>
+    <div id="completed" class="collapse" aria-labelledby="headingTwo" data-parent="#submission_list">
+
+    <div class="containers">
+      {% for submission in submissions %}
+      {% if user in submission.judges %}
+        <br>
+        <div class="submission-view-container">
+          <h2><b>{{ submission.team.name }}</b></h2><br>
+          <p class="text-white" style="font-size: large;">{{ submission.description }}</p><br>
+          <a class="btn btn-dark git-link" href="{{ submission.github_link }}"
+              title="{{ submission.github_link }}" target="_blank">GitHub</a><br><br>
+          <div class="members-list">
+            {% for team_member in submission.team.discord_members %}
+              <div class="member">
+                <img style="border-radius: 50%; width: 45px;" class="pfp" src="{{ team_member.avatar_url }}"
+                  alt="pfp">
+                <p style="font-weight: bold;" class="text-white title">{{ team_member.username }}</p>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div>
+          <table class="table table-dark">
+            <thead>
+              <tr>
+              <th scope="col">Judge</th>
+              <th scope="col">C1</th>
+              <th scope="col">C2</th>
+              <th scope="col">C3</th>
+              <th scope="col">C4</th>
+              <th scope="col">C5</th>
+              <th scope="col">Notes</tr>  
+            </thead>
+            <tbody>
+            {% for vote in submission.votes.all %}
+              <tr>
+              <th scope="row">{{ vote.user.username }}</th>
+              <td>{{ vote.c1 }}</td>
+              <td>{{ vote.c2 }}</td>
+              <td>{{ vote.c3 }}</td>
+              <td>{{ vote.c4 }}</td>
+              <td>{{ vote.c5 }}</td>
+              <td>{{ vote.notes }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          </div>
+
+          <span class="text-white">Score:
+          {% if not submission.points %}
+          Not graded
+          {% else %}
+          {{ submission.points|floatformat:1 }}
+          {% endif %}
+          </span>
+        </div>
+      {% endif %}
+      {% empty %}
+        <div class="container" style="margin-top: 2%;">
+          <h1 class="display-4 text-center">There are no submissions!</h1>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

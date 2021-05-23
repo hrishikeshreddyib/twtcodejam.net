@@ -1,17 +1,23 @@
-from django.contrib import messages
-from allauth.socialaccount.models import SocialAccount
-from django.core.handlers.wsgi import WSGIRequest
-from django.http import HttpResponse
 from random import randint, shuffle
-from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.views import View
-from TWT.context import get_discord_context
+
+from allauth.socialaccount.models import SocialAccount
 from django import forms
+from django.contrib import messages
+from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
+from django.db.models import F, Sum
+from django.db.models.aggregates import Avg
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.views import View
+
+from TWT.context import get_discord_context
 from TWT.discord import client
-from ..models.submission import Submission
+
 from ...challenges.models.challenge import Challenge
+from ..models.submission import Submission
 from ..models.team import Team
+
 
 class SubmissionListView(View):
     def get_context(self, request: WSGIRequest) -> dict:
@@ -42,9 +48,12 @@ class SubmissionListView(View):
                                  messages.INFO,
                                  "Nobody has submitted yet")
             return redirect('timathon:Home')
-        if not challenge.voting_status and not challenge.team_creation_status and not challenge.submissions_status:
-            submissions = Submission.objects.filter(challenge=challenge).order_by('-team__votes')
-        else:
+        submissions = list(Submission.objects.filter(challenge=challenge).annotate(
+            average = Avg('votes__c1') + Avg('votes__c2') + Avg('votes__c3') + Avg('votes__c4') + Avg('votes__c5')
+        ).order_by(F('average').desc(nulls_last=True)))
+        
+
+        if challenge.voting_status:
             shuffle(submissions)
             user_teams = list(Team.objects.filter(challenge=challenge, members=request.user))
             if not len(user_teams) == 0:
@@ -60,8 +69,6 @@ class SubmissionListView(View):
             discord_members = []
             for member in members:
                 new_member = {}
-                if member.id == request.user.id:
-                    is_in_team = True
                 try:
                     user = SocialAccount.objects.get(user_id=member.id)
                 except SocialAccount.DoesNotExist:
@@ -78,6 +85,11 @@ class SubmissionListView(View):
                 discord_members.append(new_member)
             team.discord_members = discord_members
             submission.team = team
+
+            submission.points = submission.votes.aggregate(
+                average = Avg('c1') + Avg('c2') + Avg('c3') + Avg('c4') + Avg('c5')
+            )['average']
+
         context["submissions"] = submissions
         context["challenge"] = challenge
         return render(request, 'timathon/submissions_list.html', context)
