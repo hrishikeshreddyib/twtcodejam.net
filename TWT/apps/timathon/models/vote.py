@@ -21,4 +21,4 @@ class Vote(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Vote {self.ID} for submission {self.submission}."
+        return f"Vote {self.id} for submission {self.submission}."
