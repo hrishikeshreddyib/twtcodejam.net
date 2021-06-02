@@ -7,9 +7,9 @@
 {% block title %}Judging{% endblock %}
 {% block content %}
     {% include "base/navbar.html" %}
-    <div class="jumbotron" style="margin-top: 2%; margin-left: 4%; margin-right: 4%">
+    <div class="h-100 p-5 bg-light border rounded-3" style="margin-top: 2%; margin-left: 4%; margin-right: 4%">
     
-        <a class="btn btn-dark git-link" href="{{ submission.github_link }}"
+        <a class="btn default-btn" href="{{ submission.github_link }}"
             title="{{ submission.github_link }}" target="_blank">GitHub</a><br><br>
 
         <h1 class="display-4">Welcome to the judging panel!</h1>
