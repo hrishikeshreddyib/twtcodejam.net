@@ -13,6 +13,8 @@ urlpatterns = [
     path('leave/',views.leave_team, name="LeaveTeam"),
     path('submissionlist/',views.submission_list, name="submissionList"),
 
+    path('pastwinners/',views.past_view),
+
     # Judging
     path('judge/', login_required(views.judge), name='Judge'),
     path('judge/vote/<int:submission_id>/', login_required(views.judge_vote), name='JudgeVote'),

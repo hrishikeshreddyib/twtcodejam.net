@@ -25,7 +25,11 @@ class PreviousView(View):
         challenge_list = []
         challenges = Challenge.objects.filter(ended=True, posted=True, type='MO')
         for challenge in challenges:
-            team = Team.objects.get(challenge=challenge, winner=True, submitted=True)
-            submission = Submission.objects.get(team=team)
-            challenge_list.append({'challenge': challenge, 'team': team, 'submission': submission})
+            # teams = Team.objects.filter(challenge=challenge, submitted=True).exclude(winner=0)
+            submissions = Submission.objects.filter(
+                team__in=Team.objects.filter(challenge=challenge, submitted=True).exclude(winner=0)
+                )
+            challenge_list.append({'challenge': challenge, 'submissions': submissions})
         context['challenge_list'] = challenge_list
+        # print(context)
+        return render(request,'timathon/codejam_listView.html',context)
