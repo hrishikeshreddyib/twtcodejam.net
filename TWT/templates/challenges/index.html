@@ -21,188 +21,52 @@
     {% endif %}
 
 
-    <div style="margin: 30px 5% 5%; color: white">
-        {# Display leaderboard #}
-
-        <div class="info">
-            <div style="margin: 0 auto">
-                <iframe class="discord-embed" src="https://ptb.discordapp.com/widget?id=501090983539245061&theme=dark" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+    <div class="container" style="margin-bottom: 63px;">
+        <div class="row h-100" data-aos="fade-up" data-aos-duration="600" data-aos-once="true">
+            <div class="col d-flex flex-column justify-content-center" style="margin-top: 23px;padding-bottom: 20px;">
+                <h1 class="text-center" style="color: rgb(255,255,255);font-family: 'Borsok Regular', Anton;font-size: 61.88px;">Timathon</h1>
+                <h1 class="text-center" style="color: rgb(255,255,255);font-family: 'Lovelo Black', Actor, sans-serif;font-size: 46.88px;opacity: 0.20;margin-top: -21px;text-align: center;padding-top: 0;">CODE JAMS</h1>
+                <h1 class="mb-5" style="font-size: 21.880000000000003px;color: rgb(255,255,255);font-weight: normal;font-family: Actor, sans-serif;"><br>Timathon is a code jam hosted every <strong>2 months</strong>, each consisting of a different theme and allowing yourself to put your skills to the test.<br><br><br><strong>Prizes</strong>:<br>For our code jams, you're in for a chance to win&nbsp;<strong>real cash prizes</strong>.<br>(CAD)&nbsp;<strong>$150</strong>,&nbsp;<strong>$100</strong>&nbsp;and&nbsp;<strong>$50</strong>&nbsp;will be split amongst the winning teams.<br><br>All top 5 teams, along with the winner and runner up of the category "Best project hosted on replit", will receive a <strong>3 month Replit hacker plan</strong> (for the whole team)!</h1>
+                <div class="text-center d-lg-flex justify-content-lg-center" style="margin-top: -15px;"><a class="btn action-button default-btn" type="button" href="{% url 'timathon:Home' %}">View Timathon</a></div>
             </div>
-            <div style="flex: 1; margin-left: 25px; margin-right: 25px; margin-top: 15px">
-                <h4 class="text-white">Timathon - Code Jam</h4>
-                <p class="text-white">We will be hosting a code jam every 2 months, each consisting of a different theme and allowing yourself to put your skills to the test. In comparison to other code jams available, you can request for your own teammates and team sizes. Meaning, if you prefer to go solo, you're still welcome to participate.</p>
-                <h5 class="text-white">Prizes:</h5>
-                <p class="text-white">For our code jams, you're in for a chance to win <b>real cash prizes</b>. <br> (CAD) <b>$150</b>, <b>$100</b> and <b>$50</b> will be split amongst the winning teams.</p>
-                <h5 class="text-white">Voting:</h5>
-                <h6 class="text-white">The community will have a chance to vote on their favorite submission. The top 5 voted will be reviewed, and the winners will be chosen by Tim.</h6>
-                <br>
-                <div style="margin-top: 10px">
-                    <h4 class="text-white">Weekly Challenges</h4>
-                    <p class="text-white">To sign up for the our weekly coding challenges, please go to <a style="color: #007bff" href="https://discord.com/channels/501090983539245061/680851838857117770">#challenge</a>. Read up on the challenge and if you would like to participate all you'll need to do is react to the message.</p>
-                    <br>
-                    <p class="text-white">Challenges are posted every Monday and If you would like to get pinged for new challenges; react to <a href="https://discordapp.com/channels/501090983539245061/511344731608055818/715232946981961778">this message</a></p>
-                </div>
-            </div>
+            <div class="col d-lg-flex align-items-lg-center hero-img" style="margin-top: 50px;margin-bottom: 50px;min-width: 55%;"><img class="img-fluid" src="{% static 'images/undraw_project_team_lc5a.svg' %}"></div>
         </div>
-        <br>
-    {% if ended_codejam %}
-            <h1 class="text-center">Latest Timathon winners</h1>
-        <br>
-            <div class="winners">
-                {% for team in winners %}
-                    <div class="team">
-                        <h2><b>{{ team.name }}</b></h2><br>
-                        <p class="text-white" style="font-size: large;">{{ team.submission.description }}</p><br>
-                        <a class="btn btn-dark git-link" href="{{ team.submission.github_link }}"
-                        title="{{ submission.github_link }}">GitHub</a><br><br>
-                        <div class="members-list">
+    </div>
+    <div class="brands">
+        <h1 class="text-center" style="color: rgb(0,0,0);font-family: 'Lovelo Black', Actor, sans-serif;font-size: 22.88px;opacity: 1;text-align: center;padding-top: 20px;">Brought to you by</h1>
+        <a href="https://replit.com/" style="padding-top: 0px;padding-bottom: 6px;">
+            <img class="img-fluid" src="{% static 'images/replit-logo.svg' %}" width="130" style="margin-top: 2px;">
+        </a>
+    </div>
+    <section class="team-boxed">
+        <div class="container" data-aos="fade-up" data-aos-duration="600" data-aos-once="true" style="margin-top: 25px;">
+            <div class="intro">
+                <h1 class="text-center" style="color: rgb(255,255,255);font-family: 'Lovelo Black', Actor, sans-serif;font-size: 22.88px;opacity: 1;text-align: center;padding-top: 20px;"><i class="fas fa-trophy" style="transform: scale(1);padding-right: 12px;"></i>LATEST TIMATHON WINNERS</h1>
+            </div>
+            <div class="row people">
+            {% for team in winners %}
+                <div class="col-md-6 col-lg-4 item">
+                    <div data-aos="fade-up" data-aos-delay="100" data-aos-once="true" class="box">
+                        <h3 class="name">{{ team.name }}</h3>
+                        <p class="description"><br>{{ team.submission.description }}<br><br></p>
+                        <div class="social">
                         {% for team_member in team.discord_members %}
-                            <div class="member">
-                                <div><img style="border-radius: 50%; width: 45px;" class="pfp" src="{{ team_member.avatar_url }}"
-                                          alt="pfp"></div>
-                                <div><p style="font-weight: bold;" class="text-white title">{{ team_member.username }}</p></div>
-                            </div>
+                            <img class="rounded-circle" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom" width="42" src="{{ team_member.avatar_url }}" title="{{ team_member.username }}">
                         {% endfor %}
                         </div>
+                        <div class="text-center d-lg-flex justify-content-lg-center" style="margin-top: 30px;">
+                            <a class="btn action-button default-btn" type="button" href="{{ team.submission.github_link }}">Github</a>
+                        </div>
                     </div>
-
-
-{#                </div>#}
-{#                    <div class="winner-team-position">{# position of team #}
-{#                        {{ team.winner }}#}
-{#                    </div>#}
-{#                    <div class="winner-team-members">#}
-{#                        {% for member in team.discord_members %}#}
-{#                            <img src="{{ member.avatar_url }}">#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-{#                    <div>{{ team.name }}</div>#}
-{#                    <div>{{ team.submission.github_link }}</div>#}
-{#                    <div>{{ team.submission.description }}</div>#}
-                {% endfor %}
+                </div>
+            {% endfor %}
             </div>
-        {% endif %}
-        <br>
-
+        </div>
+    </section>
+    <div class="container" style="margin-bottom: 100px;margin-top: 55px;">
+        <h1 class="text-center" style="color: rgb(255,255,255);font-family: 'Borsok Regular', Anton;font-size: 61.88px;">Discord</h1>
+        <h1 class="text-center mb-5" style="font-size: 21.880000000000003px;color: rgb(255,255,255);font-weight: normal;font-family: Actor, sans-serif;">Join our discord server where you can participate in <strong>weekly challenges</strong>, talk with other programmers, ask for help and more!</h1>
+        <div class="text-center d-lg-flex justify-content-lg-center" style="margin-top: -26px;"><a class="btn action-button default-btn" role="button" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom" data-aos="zoom-in" data-aos-once="true" id="log-in-out-btn-2" href="https://discord.gg/twt" style="color: rgb(255,255,255);border-style: none;" title="discord.gg/twt"><i class="fab fa-discord" style="transform: scale(1.54);padding: 11px;"></i>Join Server</a></div>
     </div>
 
-
-    {#    {% if challenges %}#}
-    {#        <div class="jumbotron" style="margin-top: 2%; margin-left: 4%; margin-right: 4%">#}
-    {#        <h1 class="display-4">Challenges</h1>#}
-    {#        <p class="lead">Coming Soon....</p>#}
-    {#        <hr class="my-4">#}
-    {##}
-    {#        <ul class="nav nav-pills flex-column flex-sm-row" id="myTab" role="tablist">#}
-    {#            <li class="nav-item" role="presentation">#}
-    {#                <a class="flex-sm-fill text-sm-center nav-link active" id="weekly-tab" data-toggle="tab" href="#weekly" role="tab" aria-controls="home" aria-selected="true">Weekly</a>#}
-    {#            </li>#}
-    {#            {% if is_helper %}#}
-    {#                <li class="nav-item" role="presentation">#}
-    {#                    <a class="flex-sm-fill text-sm-center nav-link" id="monthly-tab" data-toggle="tab" href="#monthly" role="tab" aria-controls="profile" aria-selected="false">Monthly</a>#}
-    {#                </li>#}
-    {#                <li class="nav-item" role="presentation">#}
-    {#                    <a class="flex-sm-fill text-sm-center nav-link" id="unreleased-tab" data-toggle="tab" href="#unreleased" role="tab" aria-controls="settings" aria-selected="false">Unreleased</a>#}
-    {#                </li>#}
-    {#            {% endif %}#}
-    {#        </ul>#}
-    {#        <br>#}
-    {#        <div class="tab-content">#}
-    {#            <div class="tab-pane fade show active" id="weekly" role="tabpanel" aria-labelledby="weekly-tab">#}
-    {#                {% for challenge in weekly_challenges %}#}
-    {#                    {% if forloop.first %}<div class="row">{% endif %}#}
-    {#                <div class="col-sm-6">#}
-    {#                    <div class="card">#}
-    {#                        <div class="card-body">#}
-    {#                            <h1 class="card-title">{{ challenge.title }}</h1>#}
-    {#                            <hr class="my-1">#}
-    {#                            <p class="card-text text-muted">{{ challenge.short_desc }}</p>#}
-    {#                        </div>#}
-    {#                        <div class="card-footer">#}
-    {#                            <button class="btn btn-primary">Submit</button>#}
-    {#                            <a href="{% url 'home:view' challenge.id %}">#}
-    {#                                <button class="btn btn-primary">View</button>#}
-    {#                            </a>#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#                {% if forloop.counter|divisibleby:2 %}</div><div class="row" style="margin-top: 10px;">{% endif %}#}
-    {#                {% if forloop.last %}</div>{% endif %}#}
-    {#                {% endfor %}#}
-    {#            </div>#}
-    {#            <div class="tab-pane fade" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">#}
-    {#                {% for challenge in monthly_challenges %}#}
-    {#                    {% if forloop.first %}<div class="row">{% endif %}#}
-    {#                <div class="col-sm-6">#}
-    {#                    <div class="card">#}
-    {#                        <div class="card-body">#}
-    {#                            <h1 class="card-title">{{ challenge.title }}</h1>#}
-    {#                            <hr class="my-1">#}
-    {#                            <p class="card-text text-muted">{{ challenge.short_desc }}</p>#}
-    {#                        </div>#}
-    {#                        <div class="card-footer">#}
-    {#                            <button class="btn btn-primary">Submit</button>#}
-    {#                            <a href="{% url 'home:view' challenge.id %}">#}
-    {#                                <button class="btn btn-primary">View</button>#}
-    {#                            </a>#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#                {% if forloop.counter|divisibleby:2 %}</div><div class="row" style="margin-top: 10px;">{% endif %}#}
-    {#                {% if forloop.last %}</div>{% endif %}#}
-    {#                {% endfor %}#}
-    {#            </div>#}
-    {#            {% if is_helper %}#}
-    {#                <div class="tab-pane fade" id="unreleased" role="tabpanel" aria-labelledby="unreleased-tab">#}
-    {#                    {% for challenge in unreleased_challenges.weekly_challenges %}#}
-    {#                        <h5 class="challenge-title">Weekly Challenges</h5>#}
-    {#                        {% if forloop.first %}<div class="row">{% endif %}#}
-    {#                    <div class="col-sm-6">#}
-    {#                        <div class="card">#}
-    {#                            <div class="card-body">#}
-    {#                                <h1 class="card-title">{{ challenge.title }}</h1>#}
-    {#                                <hr class="my-1">#}
-    {#                                <p class="card-text text-muted">{{ challenge.short_desc }}</p>#}
-    {#                            </div>#}
-    {#                            <div class="card-footer">#}
-    {#                                <button class="btn btn-primary">Submit</button>#}
-    {#                                <a href="{% url 'home:view' challenge.id %}">#}
-    {#                                    <button class="btn btn-primary">View</button>#}
-    {#                                </a>#}
-    {#                            </div>#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {#                    {% if forloop.counter|divisibleby:2 %}</div><div class="row" style="margin-top: 10px;">{% endif %}#}
-    {#                    {% if forloop.last %}</div>{% endif %}#}
-    {#                    {% endfor %}#}
-    {#                {% if unreleased_challenges.weekly_challenges %}#}
-    {#                <br>#}
-    {#                <hr>#}
-    {#                {% endif %}#}
-    {#                    {% for challenge in unreleased_challenges.monthly_challenges %}#}
-    {#                        <h5 class="challenge-title">Monthly Challenges</h5>#}
-    {#                        {% if forloop.first %}<div class="row">{% endif %}#}
-    {#                    <div class="col-sm-6">#}
-    {#                        <div class="card">#}
-    {#                            <div class="card-body">#}
-    {#                                <h1 class="card-title">{{ challenge.title }}</h1>#}
-    {#                                <hr class="my-1">#}
-    {#                                <p class="card-text text-muted">{{ challenge.short_desc }}</p>#}
-    {#                            </div>#}
-    {#                            <div class="card-footer">#}
-    {#                                <button class="btn btn-primary">Submit</button>#}
-    {#                                <a href="{% url 'home:view' challenge.id %}">#}
-    {#                                    <button class="btn btn-primary">View</button>#}
-    {#                                </a>#}
-    {#                            </div>#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {#                    {% if forloop.counter|divisibleby:2 %}</div><div class="row" style="margin-top: 10px;">{% endif %}#}
-    {#                    {% if forloop.last %}</div>{% endif %}#}
-    {#                    {% endfor %}#}
-    {##}
-    {#                </div>#}
-    {#            {% endif %}#}
-    {#        </div>#}
-    {#    {% endif %}#}
 {% endblock %}

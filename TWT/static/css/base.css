@@ -15,3 +15,12 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #ccc;
 }
+
+.default-btn {
+  background-color: #FF7746 !important;
+  color: #fff !important;
+}
+  
+.default-btn:hover {
+  background-color: #e35522 !important;
+}

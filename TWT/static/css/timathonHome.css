@@ -51,6 +51,10 @@ hr{
     background-color: #e35522;
 }
 
+.btn-info:hover, .btn-info:active, .btn-info:focus {
+    color: white !important;
+}
+
 .teams > div{
     max-width: 16rem;
 }
