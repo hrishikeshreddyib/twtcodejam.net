@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% load socialaccount %}
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/submissions_list.css' %}">
+{% endblock %}
+
+{% block title %}Code Jam Submission{% endblock %}
+{% block content %}
+{% include "base/navbar.html" %}
+    <div style="margin: 34px;">
+        <h1 class="text-center" style="color: rgb(255,255,255);font-family: 'Lovelo Black', Actor, sans-serif;font-size: 48.88px;">Previous Timathons</h1>
+    </div>
+    {% for challenge in challenge_list %}
+        <div class="card" style="background-color: #232d3b;color: #fff;border-radius: 42px;margin: 20px 10px;">
+            <div class="card-body">
+                <h4 class="card-title" style="text-align: center;">{{ challenge.challenge.title }}</h4>
+                <h6 class="text-muted card-subtitle mb-2" style="text-align: center;">{{challenge.challenge.created_at|date:"Y" }}</h6>
+                <p class="card-text" style="text-align: center;">{{ challenge.challenge.short_desc }}</p>
+                <h4 class="card-title" style="text-align: center;font-size: 19.376px;">Winners:</h4>
+                <div class="row text-center people">
+                    {% for winners in challenge.submissions %}
+                        <div class="col-md-6 col-lg-4 item">
+                            <div class="box">
+                                <h3 class="name">{{ winners.team.name}}</h3>
+                                <div class="social">
+                                    {% for team_member in winners.team.discord_members %}
+                                        <img class="rounded-circle" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom" width="42" src="{{ team_member.avatar_url }}" style="padding: 4px;" title="{{ team_member.username }}">
+                                    {% endfor %}
+                                </div>
+                                <div class="text-center d-lg-flex justify-content-lg-center" style="margin-top: 10px;">
+                                    <a class="btn action-button default-btn" type="button" href="{{ winners.github_link }}">Github</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('challenges', '0007_challenge_status'),
+        ("challenges", "0007_challenge_status"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='challenge',
-            name='submissions_status',
+            model_name="challenge",
+            name="submissions_status",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='challenge',
-            name='team_creation_status',
+            model_name="challenge",
+            name="team_creation_status",
             field=models.BooleanField(default=False),
         ),
     ]

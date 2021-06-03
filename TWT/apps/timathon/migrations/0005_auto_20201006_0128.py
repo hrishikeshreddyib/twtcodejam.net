@@ -6,17 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('timathon', '0004_team_voted_by'),
+        ("timathon", "0004_team_voted_by"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='team',
-            name='winner',
+            model_name="team",
+            name="winner",
         ),
         migrations.AddField(
-            model_name='team',
-            name='winner_position',
-            field=models.IntegerField(choices=[(1, 'First'), (2, 'Second'), (3, 'Third')], default=0),
+            model_name="team",
+            name="winner_position",
+            field=models.IntegerField(
+                choices=[(1, "First"), (2, "Second"), (3, "Third")], default=0
+            ),
         ),
     ]

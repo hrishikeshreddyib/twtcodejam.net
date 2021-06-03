@@ -17,7 +17,7 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 MESSAGE_TAGS = {
-    messages.ERROR: 'danger'  # Make error messages have danger class on bootstrap
+    messages.ERROR: "danger"  # Make error messages have danger class on bootstrap
 }
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -37,66 +37,64 @@ ALLOWED_HOSTS = our_secrets.ALLOWED_HOSTS
 # Application definition
 
 INSTALLED_APPS = [
-    'TWT.apps.challenges',
-    'TWT.apps.timathon',
-    'TWT.apps.weekly',
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.discord',
-
-    'markdownify',
-    'martor',
-    'crispy_forms',
-
-    'django.contrib.auth',
-    'django.contrib.admin',
-    'django.contrib.sites',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.contenttypes',
+    "TWT.apps.challenges",
+    "TWT.apps.timathon",
+    "TWT.apps.weekly",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.discord",
+    "markdownify",
+    "martor",
+    "crispy_forms",
+    "django.contrib.auth",
+    "django.contrib.admin",
+    "django.contrib.sites",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.contenttypes",
 ]
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/"
 ACCOUNT_EMAIL_REQUIRED = False
 SITE_ID = 1
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'TWT.urls'
+ROOT_URLCONF = "TWT.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'TWT', 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "TWT", "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-WSGI_APPLICATION = 'TWT.wsgi.application'
+WSGI_APPLICATION = "TWT.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -108,24 +106,24 @@ DATABASES = our_secrets.DATABASES
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -133,36 +131,45 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'TWT', 'static')
-]
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "public", "static")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "TWT", "static")]
 
 # Set monday to the first day of the week, not sunday.
 FIRST_DAY_OF_WEEK = 1
 
 # Choices are: "semantic", "bootstrap"
-MARTOR_THEME = 'bootstrap'
+MARTOR_THEME = "bootstrap"
 
 # Global martor settings
 # Input: string boolean, `true/false`
 MARTOR_ENABLE_CONFIGS = {
-    'emoji': 'true',  # to enable/disable emoji icons.
-    'imgur': 'false',  # to enable/disable imgur/custom uploader.
-    'mention': 'false',  # to enable/disable mention
-    'jquery': 'true',  # to include/revoke jquery (require for admin default django)
-    'living': 'true',  # to enable/disable live updates in preview
-    'spellcheck': 'true',  # to enable/disable spellcheck in form textareas
-    'hljs': 'true',  # to enable/disable hljs highlighting in preview
+    "emoji": "true",  # to enable/disable emoji icons.
+    "imgur": "false",  # to enable/disable imgur/custom uploader.
+    "mention": "false",  # to enable/disable mention
+    "jquery": "true",  # to include/revoke jquery (require for admin default django)
+    "living": "true",  # to enable/disable live updates in preview
+    "spellcheck": "true",  # to enable/disable spellcheck in form textareas
+    "hljs": "true",  # to enable/disable hljs highlighting in preview
 }
 
 # To show the toolbar buttons
 MARTOR_TOOLBAR_BUTTONS = [
-    'bold', 'italic', 'horizontal', 'heading', 'pre-code',
-    'blockquote', 'unordered-list', 'ordered-list',
-    'link', 'image-link', 'image-upload', 'emoji',
-    'direct-mention', 'toggle-maximize', 'help'
+    "bold",
+    "italic",
+    "horizontal",
+    "heading",
+    "pre-code",
+    "blockquote",
+    "unordered-list",
+    "ordered-list",
+    "link",
+    "image-link",
+    "image-upload",
+    "emoji",
+    "direct-mention",
+    "toggle-maximize",
+    "help",
 ]
 
 # To setup the martor editor with title label or not (default is False)
@@ -173,23 +180,22 @@ MARTOR_ENABLE_LABEL = False
 # MARTOR_IMGUR_API_KEY = 'your-api-key'
 
 # Markdownify
-MARTOR_MARKDOWNIFY_FUNCTION = 'martor.utils.markdownify'  # default
-MARTOR_MARKDOWNIFY_URL = '/martor/markdownify/'  # default
+MARTOR_MARKDOWNIFY_FUNCTION = "martor.utils.markdownify"  # default
+MARTOR_MARKDOWNIFY_URL = "/martor/markdownify/"  # default
 
 # Markdown extensions (default)
 MARTOR_MARKDOWN_EXTENSIONS = [
-    'markdown.extensions.extra',
-    'markdown.extensions.nl2br',
-    'markdown.extensions.smarty',
-    'markdown.extensions.fenced_code',
-
+    "markdown.extensions.extra",
+    "markdown.extensions.nl2br",
+    "markdown.extensions.smarty",
+    "markdown.extensions.fenced_code",
     # Custom markdown extensions.
-    'martor.extensions.urlize',
-    'martor.extensions.del_ins',  # ~~strikethrough~~ and ++underscores++
-    'martor.extensions.mention',  # to parse markdown mention
-    'martor.extensions.emoji',  # to parse markdown emoji
-    'martor.extensions.mdx_video',  # to parse embed/iframe video
-    'martor.extensions.escape_html',  # to handle the XSS vulnerabilities
+    "martor.extensions.urlize",
+    "martor.extensions.del_ins",  # ~~strikethrough~~ and ++underscores++
+    "martor.extensions.mention",  # to parse markdown mention
+    "martor.extensions.emoji",  # to parse markdown emoji
+    "martor.extensions.mdx_video",  # to parse embed/iframe video
+    "martor.extensions.escape_html",  # to handle the XSS vulnerabilities
 ]
 """
 sentry_sdk.init(

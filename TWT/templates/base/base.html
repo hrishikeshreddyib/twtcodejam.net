@@ -8,7 +8,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/fontawesome/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+    <style>
+    @font-face {
+        font-family: 'Borsok Regular';
+        src: url({% static 'fonts/boorsok.woff' %}) format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Lovelo Black';
+        src: url({% static 'fonts/Lovelo-Black.woff' %}) format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    </style>
 
     {% block stylesheets %}
     {% endblock %}
@@ -42,6 +59,8 @@
 <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bs-init.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <!--<script>
     $(document).ready(function(){
         $('.toast').toast('show');

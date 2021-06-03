@@ -7,7 +7,12 @@ from typing import Callable, List, Optional
 import requests
 import json
 
-from our_secrets import TOKEN, LOG_WEBHOOK, CODEJAM_WEBHOOK, CODEJAM_INFO_CHANNEL_WEBHOOK
+from our_secrets import (
+    TOKEN,
+    LOG_WEBHOOK,
+    CODEJAM_WEBHOOK,
+    CODEJAM_INFO_CHANNEL_WEBHOOK,
+)
 from .cache import TimedCache
 
 
@@ -18,16 +23,20 @@ class Discord:
         "GET": requests.get,
         "PUT": requests.put,
         "POST": requests.post,
-        "DELETE": requests.delete
+        "DELETE": requests.delete,
     }
 
     def __init__(self, *, token: str):
 
-        self.headers = {
-            'Authorization': f'Bot {token}'
-        }
+        self.headers = {"Authorization": f"Bot {token}"}
 
-    def __request(self, retry: Callable[[int], object], method: str = "GET", url: str = "", data: dict = None) -> dict:
+    def __request(
+        self,
+        retry: Callable[[int], object],
+        method: str = "GET",
+        url: str = "",
+        data: dict = None,
+    ) -> dict:
         if data is not None:
             if isinstance(data, dict):
                 data = json.dumps(data)
@@ -35,16 +44,23 @@ class Discord:
         print(f"{method} @ {retry.__name__}")
 
         try:
-            return self.methods[method](url=f"{self.ROOT}{url}", json=data, headers=self.headers).json()
+            return self.methods[method](
+                url=f"{self.ROOT}{url}", json=data, headers=self.headers
+            ).json()
         except Exception as e:
             raise e
 
-    def __post_webhook(self, retry: Callable[[int], object], data: List[dict] = None, codeJam: bool = False,
-                       codeJamInfo: bool = False) -> dict:
+    def __post_webhook(
+        self,
+        retry: Callable[[int], object],
+        data: List[dict] = None,
+        codeJam: bool = False,
+        codeJamInfo: bool = False,
+    ) -> dict:
         message = {
-            'username': 'TWT Web',
-            'avatar_url': 'https://images-ext-1.discordapp.net/external/FUjBZblkJRsrA_f_1VH37gLQzw_V87zLJcIxOMBn3TE/%3Fsize%3D256/https/cdn.discordapp.com/avatars/518054642979045377/2043bb80cfba102dd2adc37f41f94f1e.png',
-            'embeds': data
+            "username": "TWT Web",
+            "avatar_url": "https://images-ext-1.discordapp.net/external/FUjBZblkJRsrA_f_1VH37gLQzw_V87zLJcIxOMBn3TE/%3Fsize%3D256/https/cdn.discordapp.com/avatars/518054642979045377/2043bb80cfba102dd2adc37f41f94f1e.png",
+            "embeds": data,
         }
 
         print(f"POST @ {retry.__name__}")
@@ -64,27 +80,38 @@ class Discord:
             except Exception as e:
                 raise e
 
-    def send_webhook(self, title: str, description: str, fields=[], timestamp: bool = True, codeJam: bool = False,
-                     codeJamInfo: bool = False):
-        data = [{
-            'title': title,
-            'description': description,
-            "fields": fields
-        }]
+    def send_webhook(
+        self,
+        title: str,
+        description: str,
+        fields=[],
+        timestamp: bool = True,
+        codeJam: bool = False,
+        codeJamInfo: bool = False,
+    ):
+        data = [{"title": title, "description": description, "fields": fields}]
 
         if timestamp:
             data[0]["timestamp"] = str(datetime.utcnow())
 
-        self.__post_webhook(retry=self.send_webhook, data=data, codeJam=codeJam, codeJamInfo=codeJamInfo)
+        self.__post_webhook(
+            retry=self.send_webhook, data=data, codeJam=codeJam, codeJamInfo=codeJamInfo
+        )
 
     def get_guild(self, guild_id: int = 501090983539245061):
         return self.__request(retry=self.get_guild, url="guilds/{}".format(guild_id))
 
     def get_member(self, member_id: int, guild_id: int = 501090983539245061):
-        return self.__request(retry=self.get_member, url="guilds/{g}/members/{m}".format(g=guild_id, m=member_id))
+        return self.__request(
+            retry=self.get_member,
+            url="guilds/{g}/members/{m}".format(g=guild_id, m=member_id),
+        )
 
     def get_roles(self, guild_id: int = 501090983539245061):
-        return self.__request(retry=self.get_roles, url="guilds/{}/roles".format(guild_id))
+        return self.__request(
+            retry=self.get_roles, url="guilds/{}/roles".format(guild_id)
+        )
+
 
 # Role ids for perms in website
 client = Discord(token=TOKEN)
@@ -101,7 +128,7 @@ ALL_ROLES = {
     "MOD": MOD_ID,
     "HELPER": HELPER_ID,
     "CHALLENGE_HOST": CHALLENGE_HOST,
-    "VERIFIED": VERIFIED_ID
+    "VERIFIED": VERIFIED_ID,
 }
 
 __cache = TimedCache(seconds=10)
@@ -142,7 +169,7 @@ def is_challenge_host(member_id: int) -> bool:
 def is_verified(member_id: int) -> bool:
     member = get_member(member_id=member_id)
     try:
-        if member['message'] == "Unknown Member":
+        if member["message"] == "Unknown Member":
             return False
     except KeyError:
         pass

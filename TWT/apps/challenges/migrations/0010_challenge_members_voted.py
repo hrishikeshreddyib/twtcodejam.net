@@ -8,13 +8,15 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('challenges', '0009_challenge_voting_status'),
+        ("challenges", "0009_challenge_voting_status"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='challenge',
-            name='members_voted',
-            field=models.ManyToManyField(related_name='userwhovoted', to=settings.AUTH_USER_MODEL),
+            model_name="challenge",
+            name="members_voted",
+            field=models.ManyToManyField(
+                related_name="userwhovoted", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

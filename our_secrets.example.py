@@ -4,19 +4,19 @@ We need to use `our_secrets` since django has a `secrets.py` file somewhere.
 Make a new file for your own secrets, named `our_secrets`. Put the following variables in here:
 """
 # generate secret key from django console read the docs on how to do it
-SECRET_KEY = 'Your secret key'
+SECRET_KEY = "Your secret key"
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # your database
-        'NAME': 'your-database-name',
-        'USER': 'your-user',
-        'PASSWORD': 'your-password',
-        'HOST': 'your-host'
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",  # your database
+        "NAME": "your-database-name",
+        "USER": "your-user",
+        "PASSWORD": "your-password",
+        "HOST": "your-host",
     }
 }
 
-ALLOWED_HOSTS = ['your-hosts']
+ALLOWED_HOSTS = ["your-hosts"]
 
 
 # Discord stuff

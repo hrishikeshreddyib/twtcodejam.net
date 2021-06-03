@@ -8,13 +8,15 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('timathon', '0003_submission_challenge'),
+        ("timathon", "0003_submission_challenge"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='team',
-            name='voted_by',
-            field=models.ManyToManyField(related_name='userwhovotedforteam', to=settings.AUTH_USER_MODEL),
+            model_name="team",
+            name="voted_by",
+            field=models.ManyToManyField(
+                related_name="userwhovotedforteam", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

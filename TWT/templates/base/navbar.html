@@ -1,15 +1,6 @@
 {% load socialaccount %}
 {% load static %}
 <style>
-    .logout {
-        color: #FF7746;
-    }
-
-    .logout:hover {
-        color: #ffffff;
-        background-color: #ff7746;
-    }
-
     .dropdown-menu {
         background-color: #384757;
     }
@@ -30,6 +21,7 @@
 
     .alert {
         position: relative;
+        z-index: 999; /* temporary fix */
         opacity: 1;
         visibility: visible;
         transform: translateX(0px);
@@ -39,7 +31,6 @@
         position: relative;
         opacity: 0;
         visibility: hidden;
-        transform: translateX(50px); /* translateX, translateY, translateZ works well */
         transition: visibility 0s 250ms, opacity 250ms, transform 250ms;
     }
 
@@ -53,95 +44,93 @@
         }
     }, 5000);
 </script>
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #232D3B;">
-    <a class="navbar-brand" href="/">
-        <img src="{% static 'images/cropped-Tech-With-TimXL-192x192.png' %}" width="66" height="66" alt=""
-             class="rounded-circle">
-    </a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav m-md-6" style="margin: 0 auto">
-            {% comment %}
-                        <li class="nav-item dropdown">
-                <button class="btn text-white btn-outline-dark nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Challenges
-                </button>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Weekly</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Monthly</a>
-                </div>
-            </li>
-            {% endcomment %}
-
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'home:home' %}">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="{% url 'timathon:Home' %}">
-                    Timathon
-                </a>
-            </li>
-
-
-            {# <li class="nav-item">#}
-             {#<a class="nav-link" href="#">Weekly Challenges</a>#}
-            {#</li>#}
-            <li class="nav-item">
-                {% if is_staff %}
-                    <a class="nav-link" href="{% url 'home:unreleased' %}">Unreleased</a>
-                {% endif %}
-
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    More
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    {% for page in custom_pages %}
-                        {% if page.public %}
-                            {% if page.only_staff %}
-                                {% if is_staff %}
-                                    <a class="dropdown-item"
-                                       href="{% url 'home:custom view' page.linkName %}">{{ page.page_menu_name }}</a>
-                                {% endif %}
-                            {% else %}
-                                <a class="dropdown-item"
-                                       href="{% url 'home:custom view' page.linkName %}">{{ page.page_menu_name }}</a>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </li>
-
-            {% if user.is_authenticated %}
-                <li class="nav-item" style="position: absolute; right: 25px">
-                    <a href="{% url 'home:logout' %}">
-                        <button type="button" class="btn logout">
-                            <img class="rounded-circle" src="{{ avatar_url }}" width="32" height="32" alt="">
-                            Log out
-                        </button>
-                    </a>
-                </li>
-            {% else %}
-                <li class="nav-item" style="position: absolute; right: 25px">
-                    <a href="{% provider_login_url 'discord' %}">
-                        <button type="button" class="btn btn-dark">
-                            <img src="{% static 'images/discord.png' %}" height="32" width="32" alt="">
-                            Log in
-                        </button>
-                    </a>
+<nav
+      class="navbar navbar-dark navbar-expand-md navigation-clean-button"
+      style="background: #232d3b"
+    >
+      <div class="container">
+        <a href="{% url 'home:home' %}">
+        <img
+          class="rounded-circle"
+          src="{% static 'images/cropped-Tech-With-TimXL-192x192.png' %}"
+          style="opacity: 1; width: 66; height: 66; border-radius: 60"
+          width="66"
+          height="66"
+        /></a>
+        <button
+          data-bs-toggle="collapse"
+          class="navbar-toggler"
+          data-bs-target="#navcol-1"
+        >
+          <span class="visually-hidden">Toggle navigation</span
+          ><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse text-start" id="navcol-1">
+          <ul class="navbar-nav text-start mx-auto">
+            <li class="nav-item"><a class="nav-link" href="{% url 'home:home' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'timathon:Home' %}">Timathon</a></li>
+            {% if is_staff %}
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'home:unreleased' %}">Unreleased</a>
                 </li>
             {% endif %}
-        </ul>
-    </div>
-</nav>
+            <li class="nav-item dropdown">
+              <a
+                class="dropdown-toggle nav-link"
+                aria-expanded="false"
+                data-bs-toggle="dropdown"
+                href="#"
+                >More</a
+              >
+              <div class="dropdown-menu">
+                {% for page in custom_pages %}
+                    {% if page.public %}
+                        {% if page.only_staff %}
+                            {% if is_staff %}
+                                <a class="dropdown-item" href="{% url 'home:custom view' page.linkName %}">{{ page.page_menu_name }}</a>
+                            {% endif %}
+                        {% else %}
+                            <a class="dropdown-item" href="{% url 'home:custom view' page.linkName %}">{{ page.page_menu_name }}</a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+              </div>
+            </li>
+          </ul>
+          <span class="navbar-text actions">
+            {% if user.is_authenticated %}
+                <a href="{% url 'home:logout' %}">
+                <button
+                class="btn default-btn"
+                id="log-in-out-btn"
+                type="button"
+                >
+                <img
+                    class="rounded-circle"
+                    width="32"
+                    height="32"
+                    src="{{ avatar_url }}"
+                    style="margin-right: 5px"
+                />Log out
+                </button>
+                </a>
+            {% else %}
+                <a href="{% provider_login_url 'discord' %}">
+                <button
+                class="btn default-btn"
+                id="log-in-out-btn"
+                type="button"
+                ><i class="fab fa-discord"
+            style="transform: scale(1.54); padding: 11px"
+                ></i
+                >Log in
+                </button>
+                </a>
+            {% endif %}
+            </span>
+        </div>
+      </div>
+    </nav>
 
 <div class="container">
     {% if messages %}
@@ -149,8 +138,7 @@
             <div class="col-sm-4 col-sm-offset-3" style="position: absolute; right:0px; top: 100px">
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }} alert-text alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
+                        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
                         <strong class="alert-text">{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error{% else %}
                             {{ message.tags|title }}{% endif %}!</strong>
                         <p class="alert-text">{{ message }}</p>

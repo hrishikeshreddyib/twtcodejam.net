@@ -1,5 +1,6 @@
 import time
 
+
 class TimedCache(dict):
     def __init__(self, *, seconds: float, **kwargs):
         self.__del_after = seconds
@@ -7,7 +8,9 @@ class TimedCache(dict):
 
     def __verify_integrity(self):
         current_time = time.monotonic()
-        to_remove = [k for (k, (v, t)) in self.items() if current_time > (t + self.__del_after)]
+        to_remove = [
+            k for (k, (v, t)) in self.items() if current_time > (t + self.__del_after)
+        ]
         for item in to_remove:
             del self[item]
 

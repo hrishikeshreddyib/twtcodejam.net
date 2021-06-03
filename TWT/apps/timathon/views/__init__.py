@@ -1,12 +1,15 @@
-from .home import HomeView
-from .create_team import Create_team
-from .view_team import View_teams
-from .submission_view import Submission_View
 from .add_member_view import AddMember
+from .create_team import Create_team
+from .home import HomeView
+from .judge import *
 from .leave_member_view import LeaveTeam
 from .submission_list_view import SubmissionListView
+from .submission_view import Submission_View
 from .unvote import UnVote
+from .view_team import View_teams
 from .vote import Vote
+from .codjam_listview import PreviousView
+
 home = HomeView.as_view()
 create_team = Create_team.as_view()
 view_teams = View_teams.as_view()
@@ -16,3 +19,4 @@ leave_team = LeaveTeam.as_view()
 submission_list = SubmissionListView.as_view()
 vote = Vote.as_view()
 unvote = UnVote.as_view()
+past_view = PreviousView.as_view()

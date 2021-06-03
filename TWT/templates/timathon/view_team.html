@@ -9,7 +9,7 @@
 
 {% block content %}
     {% include 'base/navbar.html' %}
-    <div class="container">
+    <div class="team-container">
         <center><h1 class="team-name">{{ team.name }}</h1></center>
 
         <div class="members-container">
@@ -29,7 +29,7 @@
         {% if user in team.members.all %}
             <div class="invite"><div>
                 <h6>Invite members in your team: <input class="invite-text" type="text" id="invite" readonly="readonly" value="{{ invite }}"></h6></div>
-                    <div><h6><a class="invite-button" onclick="Copy()">Copy Invite</a></h6></div>
+                    <div><h6><a class="btn default-btn" onclick="Copy()">Copy Invite</a></h6></div>
             </div>
         <br>
         </center>
@@ -49,10 +49,10 @@
         {% endif %}
     </div>
     {% if team.submitted and user in team.members.all %}
-        <div class="container" style="margin-top: 25px">
+        <div class="team-container" style="margin-top: 25px">
             <br>
             <h3>Submission:</h3>
-            <a class="btn btn-dark" style="background-color: #FF7746; margin-left: 10px" href="{{ submission.github_link }}">Github Repository</a>
+            <a class="btn default-btn" style="background-color: #FF7746; margin-left: 10px" href="{{ submission.github_link }}">Github Repository</a>
             <br><br>
             <h3>Description:</h3>
             <h6 style="margin-left: 2px">{{ submission.description }}</h6>
