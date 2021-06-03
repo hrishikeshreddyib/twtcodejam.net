@@ -29,9 +29,6 @@ class Vote(models.Model):
     c4 = models.IntegerField(
         default=1, validators=criteria_validator, help_text="Criterion 4"
     )
-    c5 = models.IntegerField(
-        default=1, validators=criteria_validator, help_text="Criterion 5"
-    )
 
     notes = models.TextField(
         max_length=512, null=True, blank=True, help_text="Extra notes"

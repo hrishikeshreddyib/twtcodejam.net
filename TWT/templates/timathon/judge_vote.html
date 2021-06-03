@@ -17,7 +17,7 @@
         <form method="post" action="{% url 'timathon:JudgeVote' submission.id %}">
             {% csrf_token %}
             <div class="form-group">
-                <label for="c1">Criteria 1 - How well polished is the project?</label>
+                <label for="c1">Criteria 1 - Theme ({{ submission.challenge.title }})</label>
                 <select class="form-control" id="c1" name="c1">
                 <option>1</option>
                 <option>2</option>
@@ -33,7 +33,7 @@
             </div>
             
             <div class="form-group">
-                <label for="c2">Criteria 2 - How well does the project fit the theme? (Theme: {{ submission.challenge.title }})</label>
+                <label for="c2">Criteria 2 - Functionality</label>
                 <select class="form-control" id="c2" name="c2">
                 <option>1</option>
                 <option>2</option>
@@ -49,7 +49,7 @@
             </div>
             
             <div class="form-group">
-                <label for="c3">Criteria 3 - How usable/practical is the project?</label>
+                <label for="c3">Criteria 3 - Code</label>
                 <select class="form-control" id="c3" name="c3">
                 <option>1</option>
                 <option>2</option>
@@ -65,24 +65,8 @@
             </div>
             
             <div class="form-group">
-                <label for="c4">Criteria 4</label>
+                <label for="c4">Criteria 4 - Intuitiveness</label>
                 <select class="form-control" id="c4" name="c4">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="c5">Criteria 5</label>
-                <select class="form-control" id="c5" name="c5">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>

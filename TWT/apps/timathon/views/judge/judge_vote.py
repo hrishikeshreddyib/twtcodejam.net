@@ -16,7 +16,7 @@ from ...models.vote import Vote
 class VoteForm(forms.ModelForm):
     class Meta:
         model = Vote
-        fields = ["c1", "c2", "c3", "c4", "c5", "notes"]
+        fields = ["c1", "c2", "c3", "c4", "notes"]
 
 
 class JudgeVote(View):
@@ -48,7 +48,6 @@ class JudgeVote(View):
             c2 = form.cleaned_data["c2"]
             c3 = form.cleaned_data["c3"]
             c4 = form.cleaned_data["c4"]
-            c5 = form.cleaned_data["c5"]
             notes = form.cleaned_data["notes"]
 
             # Check if user has already voted.
@@ -66,11 +65,10 @@ class JudgeVote(View):
                 c2=c2,
                 c3=c3,
                 c4=c4,
-                c5=c5,
                 notes=notes,
             )
 
-            idv_score = c1 + c2 + c3 + c4 + c5
+            idv_score = c1 + c2 + c3 + c4
             messages.add_message(request, messages.INFO, "Successfully voted!")
             client.send_webhook(
                 "Judging",

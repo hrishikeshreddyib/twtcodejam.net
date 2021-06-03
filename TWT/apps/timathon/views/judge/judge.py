@@ -68,7 +68,7 @@ class JudgeView(View):
 
             submission.judges = [vote.user for vote in submission.votes.all()]
             submission.points = submission.votes.aggregate(
-                average=Avg("c1") + Avg("c2") + Avg("c3") + Avg("c4") + Avg("c5")
+                average=Avg("c1") + Avg("c2") + Avg("c3") + Avg("c4")
             )["average"]
 
         context["submissions"] = submissions

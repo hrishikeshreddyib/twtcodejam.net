@@ -55,7 +55,6 @@ class SubmissionListView(View):
                 + Avg("votes__c2")
                 + Avg("votes__c3")
                 + Avg("votes__c4")
-                + Avg("votes__c5")
             )
             .order_by(F("average").desc(nulls_last=True))
         )
@@ -100,7 +99,7 @@ class SubmissionListView(View):
             submission.team = team
 
             submission.points = submission.votes.aggregate(
-                average=Avg("c1") + Avg("c2") + Avg("c3") + Avg("c4") + Avg("c5")
+                average=Avg("c1") + Avg("c2") + Avg("c3") + Avg("c4")
             )["average"]
 
         context["submissions"] = submissions
