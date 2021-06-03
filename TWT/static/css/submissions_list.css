@@ -89,3 +89,11 @@
   .git-link {width: 20%;}
   .submission-view-container {width: 30%;}
 }
+
+.item .box {
+    background-color: #19202b;
+    border-radius: 30px;
+    padding: 20px 10px;
+    margin: 15px 5px;
+  }
+  
