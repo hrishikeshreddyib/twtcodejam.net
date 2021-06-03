@@ -13,7 +13,7 @@ urlpatterns = [
     path('leave/',views.leave_team, name="LeaveTeam"),
     path('submissionlist/',views.submission_list, name="submissionList"),
 
-    path('pastwinners/',views.past_view),
+    path('history/',views.past_view, name="History"),
 
     # Judging
     path('judge/', login_required(views.judge), name='Judge'),
