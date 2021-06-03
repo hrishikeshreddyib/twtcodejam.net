@@ -18,28 +18,30 @@ class LogoutView(View):
     @staticmethod
     def get(request: WSGIRequest) -> HttpResponse:
         if not request.user.is_authenticated:
-            messages.add_message(request,
-                                 messages.INFO,
-                                 'You are already logged out!',
-                                 extra_tags='alert alert-primary')
-            return redirect('/')
+            messages.add_message(
+                request,
+                messages.INFO,
+                "You are already logged out!",
+                extra_tags="alert alert-primary",
+            )
+            return redirect("/")
 
-        return render(request=request,
-                      template_name="challenges/logout.html",
-                      context=get_discord_context(
-                          request=request
-                      ))
+        return render(
+            request=request,
+            template_name="challenges/logout.html",
+            context=get_discord_context(request=request),
+        )
 
     def post(self, request: WSGIRequest) -> HttpResponse:
         if request.user.is_authenticated:
             self.logout(request=request)
-            return redirect('/')
+            return redirect("/")
 
     def logout(self, request: WSGIRequest) -> None:
         adapter = get_adapter(request=request)
         adapter.add_message(
             self.request,
             messages.SUCCESS,
-            'Logged out!',
+            "Logged out!",
         )
         adapter.logout(request=request)

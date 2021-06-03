@@ -8,13 +8,17 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('timathon', '0009_auto_20201020_0030'),
+        ("timathon", "0009_auto_20201020_0030"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='team',
-            name='voted_by',
-            field=models.ManyToManyField(blank=True, related_name='userwhovotedforteam', to=settings.AUTH_USER_MODEL),
+            model_name="team",
+            name="voted_by",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="userwhovotedforteam",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

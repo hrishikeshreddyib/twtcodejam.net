@@ -20,11 +20,20 @@ class HomeView(View):
     def get_context(self, request: WSGIRequest):
         context = get_discord_context(request=request)
         challenges = Challenge.objects.all()
-        context["monthly_challenges"] = [challenge for challenge in challenges
-                                         if challenge.type == "MO" and challenge.posted and not challenge.ended]
-        context["weekly_challenges"] = [challenge for challenge in challenges
-                                        if challenge.type == "WE" and challenge.posted and not challenge.ended]
-        context["unreleased_challenges"] = {"monthly_challenges": [], "weekly_challenges": []}
+        context["monthly_challenges"] = [
+            challenge
+            for challenge in challenges
+            if challenge.type == "MO" and challenge.posted and not challenge.ended
+        ]
+        context["weekly_challenges"] = [
+            challenge
+            for challenge in challenges
+            if challenge.type == "WE" and challenge.posted and not challenge.ended
+        ]
+        context["unreleased_challenges"] = {
+            "monthly_challenges": [],
+            "weekly_challenges": [],
+        }
         context["ended_challenges"] = {"MO": [], "WE": []}
         for challenge in challenges:
             if challenge.type == "WE" and not challenge.posted:
@@ -33,9 +42,14 @@ class HomeView(View):
                 context["unreleased_challenges"]["monthly_challenges"].append(challenge)
             if challenge.ended:  # TODO : Someone pls create view for ended challenges
                 context["ended_challenges"][challenge.type].append(challenge)
-        context["challenges"] = any((context["monthly_challenges"], context["weekly_challenges"],
-                                     context["unreleased_challenges"]["weekly_challenges"],
-                                     context["unreleased_challenges"]["monthly_challenges"]))
+        context["challenges"] = any(
+            (
+                context["monthly_challenges"],
+                context["weekly_challenges"],
+                context["unreleased_challenges"]["weekly_challenges"],
+                context["unreleased_challenges"]["monthly_challenges"],
+            )
+        )
 
         return context
 
@@ -45,7 +59,9 @@ class HomeView(View):
         if context["challenges"]:
             print(True)
         try:
-            ended_challenges = list(Challenge.objects.filter(ended=True).order_by('-id'))
+            ended_challenges = list(
+                Challenge.objects.filter(ended=True).order_by("-id")
+            )
             ended_challenge = ended_challenges[0]
             ended_winner_1 = Team.objects.get(challenge=ended_challenge, winner=1)
             ended_winner_2 = Team.objects.get(challenge=ended_challenge, winner=2)
@@ -68,7 +84,9 @@ class HomeView(View):
                         avatar_url = user.get_avatar_url()
                         if avatar_url.endswith("None.png"):
                             random = randint(0, 4)
-                            avatar_url = f'https://cdn.discordapp.com/embed/avatars/{random}.png'
+                            avatar_url = (
+                                f"https://cdn.discordapp.com/embed/avatars/{random}.png"
+                            )
                         new_member["avatar_url"] = avatar_url
                         new_member["username"] = user.extra_data["username"]
                         new_member["discriminator"] = user.extra_data["discriminator"]
@@ -82,9 +100,11 @@ class HomeView(View):
             context["ended_codejam"] = False
             print(context)
         if not context["is_verified"]:
-            messages.add_message(request,
-                                 messages.WARNING,
-                                 "You're not verified. Please join our server to continue.")
-        return render(request=request,
-                      template_name="challenges/index.html",
-                      context=context)
+            messages.add_message(
+                request,
+                messages.WARNING,
+                "You're not verified. Please join our server to continue.",
+            )
+        return render(
+            request=request, template_name="challenges/index.html", context=context
+        )

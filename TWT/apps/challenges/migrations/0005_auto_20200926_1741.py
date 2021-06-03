@@ -7,18 +7,26 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('challenges', '0004_team'),
+        ("challenges", "0004_team"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='team',
-            name='id',
-            field=models.CharField(default=uuid.uuid4, editable=False, help_text='Team id', max_length=255, primary_key=True, serialize=False, unique=True),
+            model_name="team",
+            name="id",
+            field=models.CharField(
+                default=uuid.uuid4,
+                editable=False,
+                help_text="Team id",
+                max_length=255,
+                primary_key=True,
+                serialize=False,
+                unique=True,
+            ),
         ),
         migrations.AlterField(
-            model_name='team',
-            name='name',
-            field=models.TextField(help_text='Name of the team', max_length=50),
+            model_name="team",
+            name="name",
+            field=models.TextField(help_text="Name of the team", max_length=50),
         ),
     ]

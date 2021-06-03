@@ -28,13 +28,12 @@ handler500 = handler500
 
 
 urlpatterns = [
-    path('', include('TWT.apps.challenges.urls', namespace='home')),
-    path('admin/', admin.site.urls),
-    path('timathon/', include('TWT.apps.timathon.urls', namespace="timathon")),
+    path("", include("TWT.apps.challenges.urls", namespace="home")),
+    path("admin/", admin.site.urls),
+    path("timathon/", include("TWT.apps.timathon.urls", namespace="timathon")),
     # path('weekly/', include('TWT.apps.weekly.urls', namespace="weekly")),
-    path('martor/', include('martor.urls')),
+    path("martor/", include("martor.urls")),
     # path('sentry-debug/', trigger_error),
-
 ]
 
 # For discord login.
@@ -42,10 +41,10 @@ urlpatterns = [
 provider_urlpatterns = []
 for provider in providers.registry.get_list():
     try:
-        prov_mod = import_module(provider.get_package() + '.urls')
+        prov_mod = import_module(provider.get_package() + ".urls")
     except ImportError:
         continue
-    prov_urlpatterns = getattr(prov_mod, 'urlpatterns', None)
+    prov_urlpatterns = getattr(prov_mod, "urlpatterns", None)
     if prov_urlpatterns:
         provider_urlpatterns += prov_urlpatterns
 urlpatterns += provider_urlpatterns

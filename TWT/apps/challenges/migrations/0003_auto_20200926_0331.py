@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('challenges', '0002_challenge_ended'),
+        ("challenges", "0002_challenge_ended"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='challenge',
-            name='type',
-            field=models.CharField(choices=[('WE', 'Weekly'), ('MO', 'Monthly')], default='WE', help_text='The type of challenge this is, either weekly(WE) or monthly(MO).', max_length=2),
+            model_name="challenge",
+            name="type",
+            field=models.CharField(
+                choices=[("WE", "Weekly"), ("MO", "Monthly")],
+                default="WE",
+                help_text="The type of challenge this is, either weekly(WE) or monthly(MO).",
+                max_length=2,
+            ),
         ),
     ]

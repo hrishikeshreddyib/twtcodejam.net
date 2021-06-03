@@ -6,13 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('challenges', '0006_delete_team'),
+        ("challenges", "0006_delete_team"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='challenge',
-            name='status',
-            field=models.TextField(choices=[('NOT POSTED', 'Not Posted'), ('RUNNING', 'Ongoing'), ('ENDED', 'Ended')], default='NOT POSTED', help_text='The challenge status', max_length=10),
+            model_name="challenge",
+            name="status",
+            field=models.TextField(
+                choices=[
+                    ("NOT POSTED", "Not Posted"),
+                    ("RUNNING", "Ongoing"),
+                    ("ENDED", "Ended"),
+                ],
+                default="NOT POSTED",
+                help_text="The challenge status",
+                max_length=10,
+            ),
         ),
     ]

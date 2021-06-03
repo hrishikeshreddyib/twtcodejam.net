@@ -19,24 +19,22 @@ class DeleteView(View):
 
     def get(self, request: WSGIRequest, challenge_id: int):
         if not request.user.is_authenticated:
-            messages.add_message(request,
-                                 messages.INFO,
-                                 'You are not logged in!')
-            return redirect('/')
+            messages.add_message(request, messages.INFO, "You are not logged in!")
+            return redirect("/")
 
         context = self.get_context(request=request)
         if not context["is_verified"]:
-            return redirect('/')
+            return redirect("/")
         if context["is_admin"] or context["is_challenge_host"]:
             challenge = get_object_or_404(Challenge, id=challenge_id)
             challenge.delete()
-            messages.add_message(request,
-                                 messages.INFO,
-                                 'Challenge has been deleted!')
-            return redirect('home:unreleased')
+            messages.add_message(request, messages.INFO, "Challenge has been deleted!")
+            return redirect("home:unreleased")
 
         else:
-            messages.add_message(request,
-                                 messages.INFO,
-                                 'You should be an admin or challenge host to do this!')
-            return redirect('/')
+            messages.add_message(
+                request,
+                messages.INFO,
+                "You should be an admin or challenge host to do this!",
+            )
+            return redirect("/")

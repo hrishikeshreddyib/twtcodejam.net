@@ -10,19 +10,40 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('challenges', '0003_auto_20200926_0331'),
+        ("challenges", "0003_auto_20200926_0331"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Team',
+            name="Team",
             fields=[
-                ('id', models.CharField(default=uuid.uuid4, editable=False, help_text='Team id', max_length=6, primary_key=True, serialize=False, unique=True)),
-                ('name', models.TextField(help_text='Name of the team', max_length=100)),
-                ('created_at', models.DateTimeField(auto_now=True)),
-                ('winner', models.BooleanField()),
-                ('challenge', models.ForeignKey(help_text='Code Jam', on_delete=django.db.models.deletion.CASCADE, to='challenges.challenge')),
-                ('members', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.CharField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        help_text="Team id",
+                        max_length=6,
+                        primary_key=True,
+                        serialize=False,
+                        unique=True,
+                    ),
+                ),
+                (
+                    "name",
+                    models.TextField(help_text="Name of the team", max_length=100),
+                ),
+                ("created_at", models.DateTimeField(auto_now=True)),
+                ("winner", models.BooleanField()),
+                (
+                    "challenge",
+                    models.ForeignKey(
+                        help_text="Code Jam",
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="challenges.challenge",
+                    ),
+                ),
+                ("members", models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

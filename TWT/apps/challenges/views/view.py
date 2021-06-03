@@ -16,27 +16,24 @@ class DetailView(View):
     @staticmethod
     def get(request: WSGIRequest, challenge_id: int) -> HttpResponse:
         if not request.user.is_authenticated:
-            messages.add_message(request,
-                                 messages.INFO,
-                                 'You are not logged in!')
-            return redirect('/')
+            messages.add_message(request, messages.INFO, "You are not logged in!")
+            return redirect("/")
 
         challenges = Challenge.objects.filter(id=challenge_id)
         print(len(challenges))
         if not len(challenges):
-            return redirect('/')
+            return redirect("/")
 
         context = get_discord_context(request=request)
         context["challenge"] = challenges[0]
 
         if not challenges[0].posted:
             if not discord.is_staff(member_id=context["user_id"]):
-                messages.add_message(request,
-                                     messages.INFO,
-                                     "You do not have permission to view that!")
-                return redirect('/')
+                messages.add_message(
+                    request, messages.INFO, "You do not have permission to view that!"
+                )
+                return redirect("/")
 
-        return render(request=request,
-                      template_name="challenges/view.html",
-                      context=context
-                      )
+        return render(
+            request=request, template_name="challenges/view.html", context=context
+        )

@@ -7,13 +7,13 @@ import martor.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('challenges', '0012_remove_challenge_members_voted'),
+        ("challenges", "0012_remove_challenge_members_voted"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='challenge',
-            name='description',
+            model_name="challenge",
+            name="description",
             field=martor.models.MartorField(),
         ),
     ]

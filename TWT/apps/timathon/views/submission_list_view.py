@@ -25,43 +25,54 @@ class SubmissionListView(View):
 
     def get(self, request: WSGIRequest):
         if not request.user.is_authenticated:
-            return redirect('/')
+            return redirect("/")
         context = self.get_context(request=request)
         if not context["is_verified"]:
-            return redirect('/')
+            return redirect("/")
         try:
             challenge = Challenge.objects.get(ended=False, posted=True, type="MO")
         except Challenge.DoesNotExist:
-            messages.add_message(request,
-                                 messages.INFO,
-                                 "There is no ongoing challenge Right now.")
-            return redirect('/')
-        if (not context["is_staff"] and challenge.submissions_status) or (not context["is_staff"] and challenge.team_creation_status):
-            messages.add_message(request,
-                                 messages.INFO,
-                                 "The voting period is not open please wait")
-            return redirect('timathon:Home')
+            messages.add_message(
+                request, messages.INFO, "There is no ongoing challenge Right now."
+            )
+            return redirect("/")
+        if (not context["is_staff"] and challenge.submissions_status) or (
+            not context["is_staff"] and challenge.team_creation_status
+        ):
+            messages.add_message(
+                request, messages.INFO, "The voting period is not open please wait"
+            )
+            return redirect("timathon:Home")
         submissions = Submission.objects.filter(challenge=challenge)
         submissions = list(submissions)
         if len(submissions) == 0:
-            messages.add_message(request,
-                                 messages.INFO,
-                                 "Nobody has submitted yet")
-            return redirect('timathon:Home')
-        submissions = list(Submission.objects.filter(challenge=challenge).annotate(
-            average = Avg('votes__c1') + Avg('votes__c2') + Avg('votes__c3') + Avg('votes__c4') + Avg('votes__c5')
-        ).order_by(F('average').desc(nulls_last=True)))
-        
+            messages.add_message(request, messages.INFO, "Nobody has submitted yet")
+            return redirect("timathon:Home")
+        submissions = list(
+            Submission.objects.filter(challenge=challenge)
+            .annotate(
+                average=Avg("votes__c1")
+                + Avg("votes__c2")
+                + Avg("votes__c3")
+                + Avg("votes__c4")
+                + Avg("votes__c5")
+            )
+            .order_by(F("average").desc(nulls_last=True))
+        )
 
         if challenge.voting_status:
             shuffle(submissions)
-            user_teams = list(Team.objects.filter(challenge=challenge, members=request.user))
+            user_teams = list(
+                Team.objects.filter(challenge=challenge, members=request.user)
+            )
             if not len(user_teams) == 0:
-                user_submissions = list(Submission.objects.filter(challenge=challenge, team=user_teams[0]))
+                user_submissions = list(
+                    Submission.objects.filter(challenge=challenge, team=user_teams[0])
+                )
                 print(user_submissions)
                 if not len(user_submissions) == 0:
                     submissions.remove(user_submissions[0])
-                    submissions.insert(0,user_submissions[0])
+                    submissions.insert(0, user_submissions[0])
 
         for submission in submissions:
             team = submission.team
@@ -78,7 +89,9 @@ class SubmissionListView(View):
                     avatar_url = user.get_avatar_url()
                     if avatar_url.endswith("None.png"):
                         random = randint(0, 4)
-                        avatar_url = f'https://cdn.discordapp.com/embed/avatars/{random}.png'
+                        avatar_url = (
+                            f"https://cdn.discordapp.com/embed/avatars/{random}.png"
+                        )
                     new_member["avatar_url"] = avatar_url
                     new_member["username"] = user.extra_data["username"]
                     new_member["discriminator"] = user.extra_data["discriminator"]
@@ -87,9 +100,9 @@ class SubmissionListView(View):
             submission.team = team
 
             submission.points = submission.votes.aggregate(
-                average = Avg('c1') + Avg('c2') + Avg('c3') + Avg('c4') + Avg('c5')
-            )['average']
+                average=Avg("c1") + Avg("c2") + Avg("c3") + Avg("c4") + Avg("c5")
+            )["average"]
 
         context["submissions"] = submissions
         context["challenge"] = challenge
-        return render(request, 'timathon/submissions_list.html', context)
+        return render(request, "timathon/submissions_list.html", context)

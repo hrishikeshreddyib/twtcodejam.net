@@ -7,16 +7,16 @@ import martor.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('challenges', '0013_auto_20201006_1749'),
+        ("challenges", "0013_auto_20201006_1749"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CustomPage',
+            name="CustomPage",
             fields=[
-                ('page_id', models.AutoField(primary_key=True, serialize=False)),
-                ('Name', models.CharField(max_length=200)),
-                ('content', martor.models.MartorField()),
+                ("page_id", models.AutoField(primary_key=True, serialize=False)),
+                ("Name", models.CharField(max_length=200)),
+                ("content", martor.models.MartorField()),
             ],
         ),
     ]

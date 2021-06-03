@@ -14,6 +14,7 @@ from .delete_challenge import DeleteView
 from .start_voting import StartVoting
 from .stop_voting import StopVoting
 from .custom_page_view import CustomView
+
 start = StartView.as_view()
 end = EndView.as_view()
 test = TestView.as_view()

@@ -7,6 +7,7 @@ from TWT.apps.challenges.models.custom_pages import CustomPage
 from TWT import discord
 from random import randint
 
+
 def get_discord_context(request: WSGIRequest) -> dict:
     context = {}
 
@@ -16,12 +17,12 @@ def get_discord_context(request: WSGIRequest) -> dict:
         pass
     else:
         context["user_id"] = user.uid
-        #context["avatar_url"] = user.get_avatar_url()
-        context['discord_user'] = user
+        # context["avatar_url"] = user.get_avatar_url()
+        context["discord_user"] = user
         avatar_url = user.get_avatar_url()
         if avatar_url.endswith("None.png"):
-            random = randint(0,4)
-            avatar_url = f'https://cdn.discordapp.com/embed/avatars/{random}.png'
+            random = randint(0, 4)
+            avatar_url = f"https://cdn.discordapp.com/embed/avatars/{random}.png"
 
         context["avatar_url"] = avatar_url
         context["username"] = user.extra_data["username"]
@@ -48,7 +49,7 @@ def get_discord_context(request: WSGIRequest) -> dict:
 
     finally:
         context["custom_pages"] = list(CustomPage.objects.all())
-        print(context['custom_pages'])
+        print(context["custom_pages"])
         try:
             is_verified = context["is_verified"]
         except KeyError:
