@@ -13,11 +13,20 @@ class UnreleasedView(View):
     def get_context(self, request: WSGIRequest):
         context = get_discord_context(request=request)
         challenges = Challenge.objects.all()
-        context["monthly_challenges"] = [challenge for challenge in challenges
-                                         if challenge.type == "MO" and challenge.posted and not challenge.ended]
-        context["weekly_challenges"] = [challenge for challenge in challenges
-                                        if challenge.type == "WE" and challenge.posted and not challenge.ended]
-        context["unreleased_challenges"] = {"monthly_challenges": [], "weekly_challenges": []}
+        context["monthly_challenges"] = [
+            challenge
+            for challenge in challenges
+            if challenge.type == "MO" and challenge.posted and not challenge.ended
+        ]
+        context["weekly_challenges"] = [
+            challenge
+            for challenge in challenges
+            if challenge.type == "WE" and challenge.posted and not challenge.ended
+        ]
+        context["unreleased_challenges"] = {
+            "monthly_challenges": [],
+            "weekly_challenges": [],
+        }
         context["ended_challenges"] = {"MO": [], "WE": []}
 
         for challenge in challenges:
@@ -27,19 +36,24 @@ class UnreleasedView(View):
                 context["unreleased_challenges"]["monthly_challenges"].append(challenge)
             if challenge.ended:  # TODO : Someone pls create view for ended challenges
                 context["ended_challenges"][challenge.type].append(challenge)
-        context["challenges"] = any((context["monthly_challenges"], context["weekly_challenges"],
-                                     context["unreleased_challenges"]["weekly_challenges"],
-                                     context["unreleased_challenges"]["monthly_challenges"]))
+        context["challenges"] = any(
+            (
+                context["monthly_challenges"],
+                context["weekly_challenges"],
+                context["unreleased_challenges"]["weekly_challenges"],
+                context["unreleased_challenges"]["monthly_challenges"],
+            )
+        )
 
         return context
 
     def get(self, request: WSGIRequest) -> HttpResponse:
         context: dict = self.get_context(request=request)
         if not context["is_verified"]:
-            return redirect('/')
+            return redirect("/")
         print(context["challenges"])
         if context["challenges"]:
             print(True)
-        return render(request=request,
-                      template_name="challenges/unreleased.html",
-                      context=context)
+        return render(
+            request=request, template_name="challenges/unreleased.html", context=context
+        )

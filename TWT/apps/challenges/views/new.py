@@ -15,7 +15,9 @@ from django import forms
 class NewChallengeForm(forms.Form):
     title = forms.CharField(label="Challenge title", max_length=25)
     type = forms.CharField(label="Challenge type")
-    short_desc = forms.CharField(label="Short description", max_length=100, required=False)
+    short_desc = forms.CharField(
+        label="Short description", max_length=100, required=False
+    )
     description = forms.CharField(label="Full description", max_length=2000)
     rules = forms.CharField(label="Rules", max_length=512)
 
@@ -28,29 +30,27 @@ class NewChallengeView(View):
 
     def get(self, request: WSGIRequest) -> HttpResponse:
         if not request.user.is_authenticated:
-            return redirect('/')
+            return redirect("/")
 
         context = self.get_context(request=request)
         if not context["is_verified"]:
-            return redirect('/')
+            return redirect("/")
         if not context["is_staff"]:
-            messages.add_message(request,
-                                 messages.INFO,
-                                 'You are not the part of staff in the server.')
-            return redirect('/')
+            messages.add_message(
+                request, messages.INFO, "You are not the part of staff in the server."
+            )
+            return redirect("/")
         return render(
-            request=request,
-            template_name="challenges/new.html",
-            context=context
+            request=request, template_name="challenges/new.html", context=context
         )
 
     def post(self, request: WSGIRequest):
         if not request.user.is_authenticated:
-            return redirect('/')
+            return redirect("/")
 
         context = self.get_context(request=request)
         if not context["is_staff"]:
-            return redirect('/')
+            return redirect("/")
 
         form = NewChallengeForm(request.POST)
         if form.is_valid():
@@ -59,7 +59,7 @@ class NewChallengeView(View):
             description = form.data["description"]
             short_desc = form.cleaned_data["short_desc"]
             if short_desc == "":
-                short_desc = description.split('\r\n')[0]
+                short_desc = description.split("\r\n")[0]
             Challenge.objects.create(
                 title=title,
                 type=type,
@@ -68,7 +68,7 @@ class NewChallengeView(View):
                 rules=form.data["rules"],
                 author=request.user,
             )
-            return redirect('home:unreleased')
+            return redirect("home:unreleased")
 
         print("Invalid form")
-        return redirect(reverse('home:new'))
+        return redirect(reverse("home:new"))

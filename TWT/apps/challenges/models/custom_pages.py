@@ -2,7 +2,10 @@ from django.db import models
 from martor.models import MartorField
 from django.core.validators import RegexValidator
 
-alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
+alphanumeric = RegexValidator(
+    r"^[0-9a-zA-Z]*$", "Only alphanumeric characters are allowed."
+)
+
 
 class CustomPage(models.Model):
 
@@ -13,5 +16,6 @@ class CustomPage(models.Model):
     content = MartorField()
     public = models.BooleanField(default=False)
     only_staff = models.BooleanField(default=False)
+
     def __str__(self):
         return self.title

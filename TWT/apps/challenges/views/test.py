@@ -11,8 +11,8 @@ class TestView(View):
 
     @staticmethod
     def get(request: WSGIRequest) -> HttpResponse:
-        return render(request=request,
-                      template_name="challenges/test.html",
-                      context=get_discord_context(
-                          request=request
-                      ))
+        return render(
+            request=request,
+            template_name="challenges/test.html",
+            context=get_discord_context(request=request),
+        )

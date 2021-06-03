@@ -9,6 +9,7 @@ from .unvote import UnVote
 from .view_team import View_teams
 from .vote import Vote
 from .codjam_listview import PreviousView
+
 home = HomeView.as_view()
 create_team = Create_team.as_view()
 view_teams = View_teams.as_view()

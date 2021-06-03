@@ -10,14 +10,17 @@ from TWT.context import get_discord_context
 from TWT.apps.challenges.models.challenge import Challenge
 from django.core.paginator import Paginator
 
+
 class HomeView(View):
     def get_context(self, request: WSGIRequest):
         context = get_discord_context(request=request)
-        #challenges = Challenge.objects.all()
+        # challenges = Challenge.objects.all()
         challenges = Challenge.objects.filter(type="MO", posted=True)
         context["challenges"] = challenges
         try:
-            current_challenge = Challenge.objects.get(type="MO", posted=True, ended=False)
+            current_challenge = Challenge.objects.get(
+                type="MO", posted=True, ended=False
+            )
         except:
             current_challenge = None
         context["current_challenge"] = current_challenge
@@ -30,9 +33,15 @@ class HomeView(View):
 
         context['current_challenge'] = context['current_challenge'][0] or None
         """
-        if context['current_challenge']:
-            old_teams = list(Team.objects.filter(challenge=context['current_challenge']))
-            user_teams = list(Team.objects.filter(challenge=context['current_challenge'], members=request.user))
+        if context["current_challenge"]:
+            old_teams = list(
+                Team.objects.filter(challenge=context["current_challenge"])
+            )
+            user_teams = list(
+                Team.objects.filter(
+                    challenge=context["current_challenge"], members=request.user
+                )
+            )
             if not len(user_teams) == 0:
                 old_teams.remove(user_teams[0])
                 old_teams.insert(0, user_teams[0])
@@ -54,7 +63,9 @@ class HomeView(View):
                         avatar_url = user.get_avatar_url()
                         if avatar_url.endswith("None.png"):
                             random = randint(0, 4)
-                            avatar_url = f'https://cdn.discordapp.com/embed/avatars/{random}.png'
+                            avatar_url = (
+                                f"https://cdn.discordapp.com/embed/avatars/{random}.png"
+                            )
                         new_member["avatar_url"] = avatar_url
                         new_member["username"] = user.extra_data["username"]
                         new_member["discriminator"] = user.extra_data["discriminator"]
@@ -62,14 +73,16 @@ class HomeView(View):
                 team.discord_members = discord_members
                 teams.append(team)
 
-            context['in_team'] = is_in_team
-            context['teams'] = teams
+            context["in_team"] = is_in_team
+            context["teams"] = teams
             paginator = Paginator(context["teams"], 24)
 
-            page_number = request.GET.get('page')
+            page_number = request.GET.get("page")
             page_obj = paginator.get_page(page_number)
             context["page_obj"] = page_obj
-            context["teams_registered"] = len(list(Team.objects.filter(challenge=context["current_challenge"])))
+            context["teams_registered"] = len(
+                list(Team.objects.filter(challenge=context["current_challenge"]))
+            )
 
         return context
 
@@ -77,7 +90,7 @@ class HomeView(View):
         context = self.get_context(request)
 
         if not request.user.is_authenticated:
-            return redirect('/')
+            return redirect("/")
         if not context["is_verified"]:
-            return redirect('/')
-        return render(request, template_name='timathon/index.html', context=context)
+            return redirect("/")
+        return render(request, template_name="timathon/index.html", context=context)

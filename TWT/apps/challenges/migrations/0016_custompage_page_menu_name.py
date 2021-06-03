@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('challenges', '0015_auto_20201010_0224'),
+        ("challenges", "0015_auto_20201010_0224"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='custompage',
-            name='page_menu_name',
-            field=models.CharField(default='Server Rules', max_length=100),
+            model_name="custompage",
+            name="page_menu_name",
+            field=models.CharField(default="Server Rules", max_length=100),
             preserve_default=False,
         ),
     ]
