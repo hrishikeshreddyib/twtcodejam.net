@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% load socialaccount %}
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/submissions_list.css' %}">
+{% endblock %}
+
+{% block title %}Code Jam Submission{% endblock %}
+{% block content %}
+    {% include "base/navbar.html" %}
+    {%for challenge in challenge_list %}
+        <!-- render stuff -->
+        <p style="color: aliceblue;">{{challenge.challenge.title}}</p>
+        {% for winners in challenge.submissions %}
+                <p style="color: aliceblue;">{{ winners.team.name}}</p>
+                <p style="color: aliceblue;">{{ winners.github_link }}</p>
+                <p style="color: aliceblue;">{{ winners.description }}</p>
+
+            {% for team_member in winners.team.discord_members %}
+            <img class="rounded-circle" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom" width="42" src="{{ team_member.avatar_url }}" title="{{ team_member.username }}">
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

@@ -130,7 +130,7 @@ dmypy.json
 
 #ide ignores
 .idea/
-
+.vscode/
 
 # hide secrets ofc
 our_secrets.py
