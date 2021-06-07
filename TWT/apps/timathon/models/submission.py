@@ -23,7 +23,18 @@ class Submission(models.Model):
             )
         ],
     )
-
+    repl_link = models.CharField(
+        help_text="Link to repl",
+        max_length=200,
+        validators=[
+            RegexValidator(
+                regex=re.compile(
+                    r"https://(replit.com|repl.it)/@[A-Za-z0-9-+_.]+/[A-Za-z0-9.+_-]+"
+                )
+            )
+        ],
+        blank=True
+    )
     description = models.TextField(max_length=500, help_text="Project Description")
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)

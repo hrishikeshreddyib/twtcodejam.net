@@ -10,7 +10,7 @@ from TWT.apps.timathon.models.submission import Submission
 from random import randint
 from allauth.socialaccount.models import SocialAccount
 from TWT.context import get_discord_context
-from ..models import Challenge
+from ..models import Challenge, Timer
 from django.contrib import messages
 
 
@@ -105,6 +105,11 @@ class HomeView(View):
                 messages.WARNING,
                 "You're not verified. Please join our server to continue.",
             )
+        timer = Timer.objects.all()[0]
+        context['timer_title'] = timer.title
+        context['timer_date'] = str(timer.date_time.date())
+        context['timer_time'] = ':'.join(str(timer.date_time.time()).split(':')[0:-1])
+        
         return render(
             request=request, template_name="challenges/index.html", context=context
         )
