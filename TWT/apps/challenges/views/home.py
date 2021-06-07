@@ -106,7 +106,7 @@ class HomeView(View):
                 "You're not verified. Please join our server to continue.",
             )
         timers = Timer.objects.all()
-        if len(list(timer)) != 0:
+        if len(list(timers)) != 0:
             timer = timers[0]
             context['timer_title'] = timer.title
             context['timer_date'] = str(timer.date_time.date())
