@@ -3,7 +3,6 @@ django-allauth
 django
 django-crispy-forms
 martor
-pylint
 sentry-sdk
 gunicorn
 
