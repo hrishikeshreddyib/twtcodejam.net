@@ -15,7 +15,7 @@ from ..models.team import Team
 class SumbissionForm(forms.ModelForm):
     class Meta:
         model = Submission
-        fields = ["github_link", "description"]
+        fields = ["github_link", "description","repl_link"]
 
 
 class Submission_View(View):
@@ -30,6 +30,7 @@ class Submission_View(View):
         if form.is_valid():
             description = form.cleaned_data["description"]
             github_link = form.cleaned_data["github_link"]
+            repl_link = form.cleaned_data['repl_link']
             challenge = Challenge.objects.get(type="MO", ended=False, posted=True)
             team = get_object_or_404(
                 Team, challenge=challenge, members=request.user
@@ -45,6 +46,7 @@ class Submission_View(View):
                 return redirect(reverse("home:home"))
             Submission.objects.create(
                 github_link=github_link,
+                repl_link=repl_link,
                 description=description,
                 team=team,
                 challenge=challenge,
