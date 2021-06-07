@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models.challenge import Challenge
-from .models.custom_pages import CustomPage
-
+from .models import Challenge, CustomPage, Timer
 admin.site.register(Challenge)
 admin.site.register(CustomPage)
+admin.site.register(Timer)
