@@ -110,7 +110,8 @@ class HomeView(View):
             timer = timers[0]
             context['timer'] = timer.date_time
             context['timer_title'] = timer.title
-            
+        else:
+            context['timer'] = None
         return render(
             request=request, template_name="challenges/index.html", context=context
         )

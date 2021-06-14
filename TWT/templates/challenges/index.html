@@ -21,10 +21,13 @@
     {% endif %}
 
     <!-- <a  href="https://logwork.com/countdown-pi3s"  class="countdown-timer" data-style="circles"  onclick="return false;" data-textcolor="#fafafa"  data-background="#ff7b00" data-digitscolor=" #fafafa" data-unitscolor="#fafafa" data-timezone="Africa/Monrovia" data-date="{{timer_date}} {{timer_time}}">{{timer_title}}</a>  -->
-    <div id="days"></div>
-    <div id="hours"></div>
-    <div id="minutes"></div>
-    <div id="seconds"></div>
+    {% if timer != None %}
+         <h1>{{timer_title}}</h1>
+        <div id="days"></div>
+        <div id="hours"></div>
+        <div id="minutes"></div>
+        <div id="seconds"></div>
+    {% endif %}
     <div class="container" style="margin-bottom: 63px;">
         <div class="row h-100" data-aos="fade-up" data-aos-duration="600" data-aos-once="true">
             <div class="col d-flex flex-column justify-content-center" style="margin-top: 23px;padding-bottom: 20px;">
@@ -79,125 +82,79 @@
 {% endblock %}
 
 {% block js %}
-    <script>
-        var countDownDate = new Date('{{timer|date:"Y-m-d H:i"}}').getTime();
+<script>
+    var countDownDate = new Date('{{timer|date:"Y-m-d H:i"}}').getTime();
     var daysDiv = document.getElementById('days');
     var hoursDiv = document.getElementById('hours');
     var minutesDiv = document.getElementById('minutes');
     var secondsDiv = document.getElementById('seconds');
 
+    const render = (id, value) => {
+      return document.getElementById(id).innerHTML = `
+      <div class="base-timer">
+        <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <g class="base-timer__circle">
+            <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+            <path
+              id="base-timer-path-remaining-${id}"
+              stroke-dasharray="283"
+              class="base-timer__path-remaining green"
+              d="
+                M 50, 50
+                m -45, 0
+                a 45,45 0 1,0 90,0
+                a 45,45 0 1,0 -90,0
+              "
+            ></path>
+          </g>
+        </svg>
+        <span id="base-timer-label" class="base-timer__label">${Math.floor(value)}</span>
+      </div>
+      `;
+
+    }
+
     setInterval(() => {
-        let now = new Date()
-  now = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+      let now = new Date()
+      now = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
-    let daysLeft = (countDownDate - now) / (1000 * 60 * 60 * 24);
-    let hoursLeft = ((countDownDate - now) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
-    let minutesLeft = ((countDownDate - now) % (1000 * 60 * 60)) / (1000 * 60);
-    let secondsLeft = ((countDownDate - now) % (1000 * 60)) / 1000;
+      let daysLeft = (countDownDate - now) / (1000 * 60 * 60 * 24);
+      let hoursLeft = ((countDownDate - now) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+      let minutesLeft = ((countDownDate - now) % (1000 * 60 * 60)) / (1000 * 60);
+      let secondsLeft = ((countDownDate - now) % (1000 * 60)) / 1000;
 
+      render("seconds", secondsLeft)
+      render("minutes", minutesLeft)
+      render("hours", hoursLeft)
+      render("days", daysLeft)
 
-    document.getElementById("seconds").innerHTML = `
-    <div class="base-timer">
-        <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g class="base-timer__circle">
-            <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-            <path
-            id="base-timer-path-remaining-seconds"
-            stroke-dasharray="283"
-            class="base-timer__path-remaining green"
-            d="
-                M 50, 50
-                m -45, 0
-                a 45,45 0 1,0 90,0
-                a 45,45 0 1,0 -90,0
-            "
-            ></path>
-        </g>
-        </svg>
-        <span id="base-timer-label" class="base-timer__label">${Math.floor(secondsLeft)}</span>
-    </div>
-    `;
-    document.getElementById("minutes").innerHTML = `
-    <div class="base-timer">
-        <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g class="base-timer__circle">
-            <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-            <path
-            id="base-timer-path-remaining-minutes"
-            stroke-dasharray="283"
-            class="base-timer__path-remaining green"
-            d="
-                M 50, 50
-                m -45, 0
-                a 45,45 0 1,0 90,0
-                a 45,45 0 1,0 -90,0
-            "
-            ></path>
-        </g>
-        </svg>
-        <span id="base-timer-label" class="base-timer__label">${Math.floor(minutesLeft)}</span>
-    </div>
-    `;
-    document.getElementById("hours").innerHTML = `
-    <div class="base-timer">
-        <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g class="base-timer__circle">
-            <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-            <path
-            id="base-timer-path-remaining-hours"
-            stroke-dasharray="283"
-            class="base-timer__path-remaining green"
-            d="
-                M 50, 50
-                m -45, 0
-                a 45,45 0 1,0 90,0
-                a 45,45 0 1,0 -90,0
-            "
-            ></path>
-        </g>
-        </svg>
-        <span id="base-timer-label" class="base-timer__label">${Math.floor(hoursLeft)}</span>
-    </div>
-    `;
-    document.getElementById("days").innerHTML = `
-    <div class="base-timer">
-        <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g class="base-timer__circle">
-            <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-            <path
-            id="base-timer-path-remaining-days"
-            stroke-dasharray="283"
-            class="base-timer__path-remaining green"
-            d="
-                M 50, 50
-                m -45, 0
-                a 45,45 0 1,0 90,0
-                a 45,45 0 1,0 -90,0
-            "
-            ></path>
-        </g>
-        </svg>
-        <span id="base-timer-label" class="base-timer__label">${Math.floor(daysLeft)}</span>
-    </div>
-    `;
+      if (daysLeft <= 0
+        && hoursLeft <= 0
+        && minutesLeft <= 0
+        && secondsLeft <= 0) {
+        Array.prototype.forEach.call(
+          document.getElementsByClassName("base-timer"), (timer) => {
+            timer.style.display = "none"
+          }
+        )
 
-    document
-        .getElementById("base-timer-path-remaining-seconds")
-        .setAttribute("stroke-dasharray", `${secondsLeft * 4.8} 283`);
+      } else {
+        document
+          .getElementById("base-timer-path-remaining-seconds")
+          .setAttribute("stroke-dasharray", `${secondsLeft * 4.8} 283`);
 
-    document
-        .getElementById("base-timer-path-remaining-minutes")
-        .setAttribute("stroke-dasharray", `${minutesLeft * 4.8} 283`);
+        document
+          .getElementById("base-timer-path-remaining-minutes")
+          .setAttribute("stroke-dasharray", `${minutesLeft * 4.8} 283`);
 
-    document
-        .getElementById("base-timer-path-remaining-hours")
-        .setAttribute("stroke-dasharray", `${hoursLeft * 4.8} 283`);
+        document
+          .getElementById("base-timer-path-remaining-hours")
+          .setAttribute("stroke-dasharray", `${hoursLeft * 4.8} 283`);
 
-    document
-        .getElementById("base-timer-path-remaining-days")
-        .setAttribute("stroke-dasharray", `${daysLeft * 4.8} 283`);
+        document
+          .getElementById("base-timer-path-remaining-days")
+          .setAttribute("stroke-dasharray", `${daysLeft * 4.5} 283`);
+      }
     });
-
-
-    </script>
+</script>
 {% endblock %}
