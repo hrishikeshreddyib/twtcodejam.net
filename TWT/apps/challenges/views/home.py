@@ -108,10 +108,9 @@ class HomeView(View):
         timers = Timer.objects.all()
         if len(list(timers)) != 0:
             timer = timers[0]
+            context['timer'] = timer.date_time
             context['timer_title'] = timer.title
-            context['timer_date'] = str(timer.date_time.date())
-            context['timer_time'] = ':'.join(str(timer.date_time.time()).split(':')[0:-1])
-        
+            
         return render(
             request=request, template_name="challenges/index.html", context=context
         )
