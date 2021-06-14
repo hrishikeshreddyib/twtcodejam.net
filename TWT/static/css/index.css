@@ -5,6 +5,7 @@
 .brands {
   color: #313437;
   background-color: #fff;
+  margin-top: 100px;
 }
 
 .brands a {
@@ -80,16 +81,30 @@
 .team-boxed .item img {
   max-width: 160px;
 }
-  
+
+/* ================== Timers ================= */
+
+.timer-title{
+  /* font-family: 'Lovelo Black'; */
+  color: #fafafa;
+  margin: 15px 0;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: none;
+}
+
+.timer-container{
+  display: flex;
+  grid-gap: 2rem;
+  justify-content: center;
+}
 
 .base-timer {
   position: relative;
-  width: 300px;
-  height: 300px;
-}
-
-.base-timer__svg {
-  transform: scaleX(-1);
+  width: 8rem;
+  height: 8rem;
+  color: white; 
 }
 
 .base-timer__circle {
@@ -98,31 +113,47 @@
 }
 
 .base-timer__path-elapsed {
-  stroke-width: 7px;
-  stroke: #212529;
+  stroke-width: 5px;
+  stroke: transparent;
 }
 
 .base-timer__path-remaining {
-  stroke-width: 7px;
+  stroke-width: 5px;
   stroke-linecap: round;
   transform: rotate(90deg);
   transform-origin: center;
   transition: 1s linear all;
   fill-rule: nonzero;
-  stroke: currentColor;
+  background-color: red;
 }
 
 .base-timer__path-remaining.green {
-  color: #e35522 !important;
+  stroke: #e35522;
 }
 
 .base-timer__label {
   position: absolute;
-  width: 300px;
-  height: 300px;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 48px;
+}
+
+@media (max-width:650px) {
+  .base-timer{
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .timer-container{
+    grid-gap: 1rem;
+  }
+
+  .base-timer__svg{
+    display: none;
+  }
+
+  .base-timer__label{
+    position: initial;
+  }
 }

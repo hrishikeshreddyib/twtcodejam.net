@@ -12,8 +12,7 @@ from allauth.socialaccount.models import SocialAccount
 from TWT.context import get_discord_context
 from ..models import Challenge, Timer
 from django.contrib import messages
-
-
+from django.utils import timezone
 class HomeView(View):
     """The main landing page for challenges."""
 
@@ -108,8 +107,11 @@ class HomeView(View):
         timers = Timer.objects.all()
         if len(list(timers)) != 0:
             timer = timers[0]
-            context['timer'] = timer.date_time
-            context['timer_title'] = timer.title
+            if timer.date_time < timezone.now():
+                context['timer'] = None
+            else:
+                context['timer'] = timer.date_time
+                context['timer_title'] = timer.title
         else:
             context['timer'] = None
         return render(
