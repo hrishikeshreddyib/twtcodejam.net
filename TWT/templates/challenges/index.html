@@ -21,10 +21,13 @@
     {% endif %}
 
     <!-- <a  href="https://logwork.com/countdown-pi3s"  class="countdown-timer" data-style="circles"  onclick="return false;" data-textcolor="#fafafa"  data-background="#ff7b00" data-digitscolor=" #fafafa" data-unitscolor="#fafafa" data-timezone="Africa/Monrovia" data-date="{{timer_date}} {{timer_time}}">{{timer_title}}</a>  -->
-    <div id="days"></div>
-    <div id="hours"></div>
-    <div id="minutes"></div>
-    <div id="seconds"></div>
+    {% if timer != None %}
+         <h1>{{timer_title}}</h1>
+        <div id="days"></div>
+        <div id="hours"></div>
+        <div id="minutes"></div>
+        <div id="seconds"></div>
+    {% endif %}
     <div class="container" style="margin-bottom: 63px;">
         <div class="row h-100" data-aos="fade-up" data-aos-duration="600" data-aos-once="true">
             <div class="col d-flex flex-column justify-content-center" style="margin-top: 23px;padding-bottom: 20px;">
