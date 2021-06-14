@@ -98,16 +98,16 @@ class Discord:
             retry=self.send_webhook, data=data, codeJam=codeJam, codeJamInfo=codeJamInfo
         )
 
-    def get_guild(self, guild_id: int = 820665328534290442):
+    def get_guild(self, guild_id: int = 501090983539245061):
         return self.__request(retry=self.get_guild, url="guilds/{}".format(guild_id))
 
-    def get_member(self, member_id: int, guild_id: int = 820665328534290442):
+    def get_member(self, member_id: int, guild_id: int = 501090983539245061):
         return self.__request(
             retry=self.get_member,
             url="guilds/{g}/members/{m}".format(g=guild_id, m=member_id),
         )
 
-    def get_roles(self, guild_id: int = 820665328534290442):
+    def get_roles(self, guild_id: int = 501090983539245061):
         return self.__request(
             retry=self.get_roles, url="guilds/{}/roles".format(guild_id)
         )
@@ -115,12 +115,12 @@ class Discord:
 
 # Role ids for perms in website
 client = Discord(token=TOKEN)
-HELPER_ID: int = 849690131374800906
-MOD_ID: int = 849690228876771328
-ADMIN_ID: int = 849690281536389230
-TIM_ID: int = 849690281536389230
-CHALLENGE_HOST: int = 849690281536389230
-VERIFIED_ID: int = 839761841537941545
+HELPER_ID: int = 541272748161499147
+MOD_ID: int = 511332506780434438
+ADMIN_ID: int = 580911082290282506
+TIM_ID: int = 511334601977888798
+CHALLENGE_HOST: int = 713170076148433017
+VERIFIED_ID: int = 612391389086351363
 
 ALL_ROLES = {
     "TIM": TIM_ID,
