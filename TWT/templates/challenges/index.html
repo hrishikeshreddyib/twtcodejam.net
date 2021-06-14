@@ -21,15 +21,9 @@
     {% endif %}
 
     <!-- <a  href="https://logwork.com/countdown-pi3s"  class="countdown-timer" data-style="circles"  onclick="return false;" data-textcolor="#fafafa"  data-background="#ff7b00" data-digitscolor=" #fafafa" data-unitscolor="#fafafa" data-timezone="Africa/Monrovia" data-date="{{timer_date}} {{timer_time}}">{{timer_title}}</a>  -->
-    {% if timer != None %}
-         <h1>{{timer_title}}</h1>
-        <div id="days"></div>
-        <div id="hours"></div>
-        <div id="minutes"></div>
-        <div id="seconds"></div>
-    {% endif %}
-    <div class="container" style="margin-bottom: 63px;">
-        <div class="row h-100" data-aos="fade-up" data-aos-duration="600" data-aos-once="true">
+    
+    <div class="container" style="margin-bottom: 30px;">
+        <div class="row h-100" data-aos="fade-up" data-aos-delay="350" data-aos-duration="600" data-aos-once="true">
             <div class="col d-flex flex-column justify-content-center" style="margin-top: 23px;padding-bottom: 20px;">
                 <h1 class="text-center" style="color: rgb(255,255,255);font-family: 'Borsok Regular', Anton;font-size: 61.88px;">Timathon</h1>
                 <h1 class="text-center" style="color: rgb(255,255,255);font-family: 'Lovelo Black', Actor, sans-serif;font-size: 46.88px;opacity: 0.20;margin-top: -21px;text-align: center;padding-top: 0;">CODE JAMS</h1>
@@ -42,6 +36,17 @@
             <div class="col d-lg-flex align-items-lg-center hero-img" style="margin-top: 50px;margin-bottom: 50px;min-width: 55%;"><img class="img-fluid" src="{% static 'images/undraw_project_team_lc5a.svg' %}"></div>
         </div>
     </div>
+    {% if timer != None %}
+    <div data-aos="fade-up" data-aos-duration="600" data-aos-once="true">
+      <h1 class="timer-title">{{timer_title}}</h1> 
+      <div class="timer-container">
+        <div id="days"></div>
+        <div id="hours"></div>
+        <div id="minutes"></div>
+        <div id="seconds"></div>
+      </div>
+    </div>
+    {% endif %}
     <div class="brands">
         <h1 class="text-center" style="color: rgb(0,0,0);font-family: 'Lovelo Black', Actor, sans-serif;font-size: 22.88px;opacity: 1;text-align: center;padding-top: 20px;">Brought to you by</h1>
         <a href="https://replit.com/" style="padding-top: 0px;padding-bottom: 6px;">
@@ -113,9 +118,9 @@
       `;
 
     }
-
-    setInterval(() => {
-      let now = new Date()
+    
+    const syncTimer = () => {
+      let now = new Date();
       now = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
       let daysLeft = (countDownDate - now) / (1000 * 60 * 60 * 24);
@@ -128,16 +133,10 @@
       render("hours", hoursLeft)
       render("days", daysLeft)
 
-      if (daysLeft <= 0
-        && hoursLeft <= 0
-        && minutesLeft <= 0
-        && secondsLeft <= 0) {
-        Array.prototype.forEach.call(
-          document.getElementsByClassName("base-timer"), (timer) => {
-            timer.style.display = "none"
-          }
-        )
-
+      if (daysLeft <= 0 && hoursLeft <= 0 && minutesLeft <= 0 && secondsLeft <= 0) {
+        document.getElementsByClassName("base-timer").forEach((timer) => {
+          timer.style.display = "none";
+        });
       } else {
         document
           .getElementById("base-timer-path-remaining-seconds")
@@ -155,6 +154,9 @@
           .getElementById("base-timer-path-remaining-days")
           .setAttribute("stroke-dasharray", `${daysLeft * 4.5} 283`);
       }
-    });
+    };
+
+    syncTimer();
+    setInterval(syncTimer, 1000); 
 </script>
 {% endblock %}
