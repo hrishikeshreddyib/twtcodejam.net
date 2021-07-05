@@ -4,7 +4,7 @@ from django.db import models
 
 from TWT.apps.timathon.models import Submission
 
-criteria_validator = [MinValueValidator(1), MaxValueValidator(10)]
+criteria_validator = [MinValueValidator(0), MaxValueValidator(10)]
 
 
 class Vote(models.Model):
@@ -31,7 +31,7 @@ class Vote(models.Model):
     )
 
     notes = models.TextField(
-        max_length=512, null=True, blank=True, help_text="Extra notes"
+        max_length=2048, null=True, blank=True, help_text="Extra notes"
     )
     created_at = models.DateTimeField(auto_now=True)
 
