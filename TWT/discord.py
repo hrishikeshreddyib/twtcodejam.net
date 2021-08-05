@@ -3,19 +3,23 @@ This file is used to get information from the discord api.
 We are using roles to get the permissions for various users these functions are called in context.py
 """
 from datetime import datetime
+from our_secrets import CODEJAM_WEBHOOK, LOG_WEBHOOK
 from typing import Callable, List, Optional
 import requests
 import json
-
-from our_secrets import (
-    TOKEN,
-    LOG_WEBHOOK,
-    CODEJAM_WEBHOOK,
-    CODEJAM_INFO_CHANNEL_WEBHOOK,
-)
+import os
+# from our_secrets import (
+#     TOKEN,
+#     LOG_WEBHOOK,
+#     CODEJAM_WEBHOOK,
+#     CODEJAM_INFO_CHANNEL_WEBHOOK,
+# )
 from .cache import TimedCache
 
-
+TOKEN = os.environ("TOKEN")
+LOG_WEBHOOK = os.environ("LOG_WEBHOOK")
+CODEJAM_WEBHOOK = os.environ("CODEJAM_WEBHOOK")
+CODEJAM_INFO_CHANNEL_WEBHOOK = os.environ("CODEJAM_INFO_CHANNEL_WEBHOOK")
 class Discord:
     ROOT = "https://discord.com/api/"
 
