@@ -2,7 +2,7 @@ name: Build
 
 on:
   workflow_run:
-    workflows: ["Build"]
+    workflows: ["Lint & Test"]
     branches: ["master"]
     types: ["completed"]
 
