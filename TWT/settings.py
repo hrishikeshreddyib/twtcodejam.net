@@ -11,10 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import our_secrets
 from django.contrib.messages import constants as messages
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+import urllib.parse as urlparse
+
 
 MESSAGE_TAGS = {
     messages.ERROR: "danger"  # Make error messages have danger class on bootstrap
@@ -27,12 +26,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = our_secrets.SECRET_KEY
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = our_secrets.ALLOWED_HOSTS
+ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOST", "").split(",")]
+
+url = urlparse.urlparse(os.environ.get("DB_URI"))
+dbname = url.path[1:]
+user = url.username
+password = url.password
+host = url.hostname
+port = url.port
 
 # Application definition
 
@@ -99,7 +105,16 @@ WSGI_APPLICATION = "TWT.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = our_secrets.DATABASES
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",  # your database
+        "NAME": str(dbname),
+        "USER": user,
+        "PASSWORD": password,
+        "HOST": host,
+        "PORT": port,
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:12-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=twt
+      - POSTGRES_PASSWORD=twt
+      - POSTGRES_DB=twt
+  twt:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    ports:
+        - "8000:8000"
+    environment: 
+        -  DB_URI=postgres://twt:twt@postgres:5432/twt?sslmode=disable
+        -  ALLOWED_HOST=*
+        -  SECRET_KEY=twt
+    env_file: 
+        - .env
+    depends_on: 
+        - postgres
+    links:
+        - postgres

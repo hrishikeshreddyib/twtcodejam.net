@@ -6,16 +6,19 @@ from datetime import datetime
 from typing import Callable, List, Optional
 import requests
 import json
-
-from our_secrets import (
-    TOKEN,
-    LOG_WEBHOOK,
-    CODEJAM_WEBHOOK,
-    CODEJAM_INFO_CHANNEL_WEBHOOK,
-)
+import os
+# from our_secrets import (
+#     TOKEN,
+#     LOG_WEBHOOK,
+#     CODEJAM_WEBHOOK,
+#     CODEJAM_INFO_CHANNEL_WEBHOOK,
+# )
 from .cache import TimedCache
 
-
+TOKEN = os.environ.get("TOKEN")
+LOG_WEBHOOK = os.environ.get("LOG_WEBHOOK")
+CODEJAM_WEBHOOK = os.environ.get("CODEJAM_WEBHOOK")
+CODEJAM_INFO_CHANNEL_WEBHOOK = os.environ.get("CODEJAM_INFO_CHANNEL_WEBHOOK")
 class Discord:
     ROOT = "https://discord.com/api/"
 

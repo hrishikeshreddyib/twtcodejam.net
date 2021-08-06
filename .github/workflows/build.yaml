@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  workflow_run:
+    workflows: ["Lint & Test"]
+    branches: ["master"]
+    types: ["completed"]
+
+jobs:
+  build:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Create SHA Container Tag
+        id: sha_tag
+        run: |
+          tag=$(cut -c 1-7 <<< $GITHUB_SHA)
+          echo "::set-output name=tag::$tag"
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          cache-from: type=registry,ref=ghcr.io/tech-with-tim/twtcodejam.net:latest
+          cache-to: type=inline
+          tags: |
+            ghcr.io/tech-with-tim/twtcodejam.net:${{ steps.sha_tag.outputs.tag }}
+            ghcr.io/tech-with-tim/twtcodejam.net:latest
