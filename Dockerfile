@@ -14,9 +14,8 @@ COPY requirements.txt start-server.sh /app/
 COPY . /app/
 
 WORKDIR /app
-RUN pip install -r requirements.txt --cache-dir /app/pip_cache
+RUN pip install -r requirements.txt
 RUN chown -R www-data:www-data /app
-RUN python manage.py collectstatic
 EXPOSE 8020
 STOPSIGNAL SIGTERM
-CMD ["/opt/app/start-server.sh"]
+CMD ["sh","start-server.sh"]
