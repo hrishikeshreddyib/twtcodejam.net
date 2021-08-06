@@ -31,9 +31,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOST")]
+ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOST", "").split(",")]
 
-url = urlparse.urlparse(os.environ.get('DB_URI'))
+url = urlparse.urlparse(os.environ.get("DB_URI"))
 dbname = url.path[1:]
 user = url.username
 password = url.password
@@ -106,13 +106,13 @@ WSGI_APPLICATION = "TWT.wsgi.application"
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        "ENGINE": 'django.db.backends.postgresql',  # your database
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",  # your database
         "NAME": str(dbname),
-        "USER":user,
-        "PASSWORD":password,
-        "HOST":host,
-        "PORT":port
+        "USER": user,
+        "PASSWORD": password,
+        "HOST": host,
+        "PORT": port,
     }
 }
 

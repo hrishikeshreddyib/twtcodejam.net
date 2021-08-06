@@ -10,11 +10,12 @@ RUN mkdir -p /app
 
 RUN mkdir -p /app/pip_cache
 
-COPY requirements.txt start-server.sh /app/
-COPY . /app/
-
 WORKDIR /app
-RUN pip install -r requirements.txt
+
+COPY requirements.txt start-server.sh /app/
+RUN pip3 install -r requirements.txt
+
+COPY . /app/
 RUN chown -R www-data:www-data /app
 EXPOSE 8020
 STOPSIGNAL SIGTERM

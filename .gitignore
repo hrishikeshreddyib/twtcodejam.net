@@ -133,5 +133,4 @@ dmypy.json
 .vscode/
 
 # hide secrets ofc
-our_secrets.py
 settings.json
