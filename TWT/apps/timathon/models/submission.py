@@ -33,7 +33,7 @@ class Submission(models.Model):
                 )
             )
         ],
-        blank=True
+        blank=True,
     )
     description = models.TextField(max_length=500, help_text="Project Description")
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
