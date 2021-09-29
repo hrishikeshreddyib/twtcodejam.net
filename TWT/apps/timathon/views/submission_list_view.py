@@ -33,7 +33,7 @@ class SubmissionListView(View):
             challenge = Challenge.objects.get(ended=False, posted=True, type="MO")
         except Challenge.DoesNotExist:
             messages.add_message(
-                request, messages.INFO, "There is no ongoing challenge right now."
+                request, messages.INFO, "There are no ongoing challenges"
             )
             return redirect("/")
         if (not context["is_staff"] and challenge.submissions_status) or (

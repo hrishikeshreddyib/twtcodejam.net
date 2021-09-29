@@ -72,12 +72,12 @@ class Create_team(View):
             client.send_webhook(
                 "Teams",
                 f"<@{context['discord_user'].uid}> tried creating a team",
-                fields=[{"name": "Error", "value": "There is no codejam ongoing"}],
+                fields=[{"name": "Error", "value": "There are no ongoing code-jams"}],
             )
             return redirect("home:home")
         if challenge.team_creation_status == False:
             messages.add_message(
-                request, messages.WARNING, "Team Submissions are closed right now"
+                request, messages.WARNING, "Team creation period is over"
             )
             client.send_webhook(
                 "Teams",
