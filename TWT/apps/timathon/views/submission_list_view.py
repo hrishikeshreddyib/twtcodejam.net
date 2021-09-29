@@ -33,14 +33,14 @@ class SubmissionListView(View):
             challenge = Challenge.objects.get(ended=False, posted=True, type="MO")
         except Challenge.DoesNotExist:
             messages.add_message(
-                request, messages.INFO, "There is no ongoing challenge Right now."
+                request, messages.INFO, "There are no ongoing challenges"
             )
             return redirect("/")
         if (not context["is_staff"] and challenge.submissions_status) or (
             not context["is_staff"] and challenge.team_creation_status
         ):
             messages.add_message(
-                request, messages.INFO, "The voting period is not open please wait"
+                request, messages.INFO, "Submissions have not closed yet, please wait"
             )
             return redirect("timathon:Home")
         submissions = Submission.objects.filter(challenge=challenge)
