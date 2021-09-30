@@ -7,7 +7,7 @@ from typing import Callable, List, Optional
 import requests
 import json
 
-from our_secrets import (
+from config import (
     TOKEN,
     LOG_WEBHOOK,
     CODEJAM_WEBHOOK,
