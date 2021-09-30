@@ -2,8 +2,7 @@ import dotenv
 import os
 import urllib.parse as urlparse
 
-if os.path.isfile(".env"):
-    dot_env_conf = dotenv.load_dotenv(".env")
+dotenv.load_dotenv()
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
