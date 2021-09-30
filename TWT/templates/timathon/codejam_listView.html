@@ -18,6 +18,11 @@
                 <h4 class="card-title" style="text-align: center;">{{ challenge.challenge.title }}</h4>
                 <h6 class="text-muted card-subtitle mb-2" style="text-align: center;">{{challenge.challenge.created_at|date:"Y" }}</h6>
                 <p class="card-text" style="text-align: center;">{{ challenge.challenge.short_desc }}</p>
+                {% if challenge.challenge.youtube_video_link %}
+                    <div class="text-center">
+                        <a type="button" class="btn btn-info" href="{{ challenge.challenge.youtube_video_link }}" target="_blank">Youtube Video</a>
+                    </div>
+                {% endif %}
                 <h4 class="card-title" style="text-align: center;font-size: 19.376px;">Winners:</h4>
                 <div class="row text-center people">
                     {% for winners in challenge.submissions %}
