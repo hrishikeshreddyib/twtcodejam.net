@@ -70,3 +70,6 @@ class Challenge(models.Model):
     @property
     def active(self):
         return self.posted and not self.ended
+
+    def get_video_embed_link(self) -> str:
+        return f"https://youtube.com/embed/{self.youtube_video_link.split('=')[1]}"
