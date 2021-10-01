@@ -62,7 +62,7 @@ class Challenge(models.Model):
     youtube_video_link = models.CharField(max_length=43, null=True, blank=True, validators=[
         RegexValidator(
             regex=re.compile(
-                r"^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$"
+                r"^(https?\:\/\/)?(www\.)?(youtube\.com)\/.+$"
             )
         )
     ],)
