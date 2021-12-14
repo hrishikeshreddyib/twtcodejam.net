@@ -62,7 +62,7 @@ class Challenge(models.Model):
     youtube_video_link = models.CharField(max_length=43, null=True, blank=True, validators=[
         RegexValidator(
             regex=re.compile(
-                r"^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$"
+                r"^(https?\:\/\/)?(www\.)?(youtube\.com)\/.+$"
             )
         )
     ],)
@@ -70,3 +70,6 @@ class Challenge(models.Model):
     @property
     def active(self):
         return self.posted and not self.ended
+
+    def get_video_embed_link(self) -> str:
+        return f"https://youtube.com/embed/{self.youtube_video_link.split('=')[1]}"
