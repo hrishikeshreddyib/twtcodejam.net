@@ -95,5 +95,61 @@
     border-radius: 30px;
     padding: 20px 10px;
     margin: 15px 5px;
-  }
-  
+}
+
+
+.yt-video{
+    border: 5px solid orange;
+    border-radius: .5rem;
+}
+
+@media (max-width: 1000px){
+    .yt-video{
+        width: 700px;
+        height: 800px;
+    }
+}
+@media (max-width: 900px){
+    .yt-video{
+        width: 700px;
+        height: 500px;
+    }
+}
+
+
+@media (max-width: 800px){
+    .yt-video{
+        width: 600px;
+        height: 700px;
+    }
+}
+
+@media (max-width: 700px){
+    .yt-video{
+        width: 550px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 600px){
+    .yt-video{
+        width:400px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 500px){
+    .yt-video{
+        width: 350px;
+        height: 300px;
+    }
+    
+}
+
+@media (max-width: 400px){
+    .yt-video{
+        width: 280px;
+        height: 200px;
+    }
+    
+}

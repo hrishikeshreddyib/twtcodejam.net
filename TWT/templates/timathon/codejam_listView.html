@@ -20,7 +20,7 @@
                 <p class="card-text" style="text-align: center;">{{ challenge.challenge.short_desc }}</p>
                 {% if challenge.challenge.youtube_video_link %}
                     <div class="text-center">
-                        <iframe width="90%" height="554" src="{{ challenge.challenge.get_video_embed_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe class="yt-video" width="90%" height="554" src="{{ challenge.challenge.get_video_embed_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 {% endif %}
                 <h4 class="card-title" style="text-align: center;font-size: 19.376px;">Winners:</h4>
