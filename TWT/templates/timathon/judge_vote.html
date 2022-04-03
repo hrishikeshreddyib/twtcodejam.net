@@ -12,7 +12,7 @@
         <a class="btn default-btn" href="{{ submission.github_link }}"
             title="{{ submission.github_link }}" target="_blank">GitHub</a><br><br>
 
-        <h1 class="display-4">Welcome to the judging panel!</h1>
+        <h1 class="display-4">Judging {{ submission.team.name }}</h1>
         <hr class="my-4">
         <form method="post" action="{% url 'timathon:JudgeVote' submission.id %}">
             {% csrf_token %}

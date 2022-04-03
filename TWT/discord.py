@@ -13,8 +13,8 @@ from config import (
     CODEJAM_WEBHOOK,
     CODEJAM_INFO_CHANNEL_WEBHOOK,
 )
-from .cache import TimedCache
 
+from .cache import TimedCache
 
 class Discord:
     ROOT = "https://discord.com/api/"
