@@ -1,5 +1,5 @@
 django-markdownify
-django-allauth
+django-allauth==0.45.0
 django
 django-crispy-forms
 martor
