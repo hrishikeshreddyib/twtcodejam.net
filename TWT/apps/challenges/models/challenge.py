@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from martor.models import MartorField
+import re
+from django.core.validators import RegexValidator
 
 
 class Challenge(models.Model):
@@ -57,7 +59,17 @@ class Challenge(models.Model):
     submissions_status = models.BooleanField(default=False)
     team_creation_status = models.BooleanField(default=False)
     voting_status = models.BooleanField(default=False)
+    youtube_video_link = models.CharField(max_length=43, null=True, blank=True, validators=[
+        RegexValidator(
+            regex=re.compile(
+                r"^(https?\:\/\/)?(www\.)?(youtube\.com)\/.+$"
+            )
+        )
+    ],)
 
     @property
     def active(self):
         return self.posted and not self.ended
+
+    def get_video_embed_link(self) -> str:
+        return f"https://youtube.com/embed/{self.youtube_video_link.split('=')[1]}"

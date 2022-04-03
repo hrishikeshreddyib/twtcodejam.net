@@ -6,19 +6,16 @@ from datetime import datetime
 from typing import Callable, List, Optional
 import requests
 import json
-import os
-# from our_secrets import (
-#     TOKEN,
-#     LOG_WEBHOOK,
-#     CODEJAM_WEBHOOK,
-#     CODEJAM_INFO_CHANNEL_WEBHOOK,
-# )
+
+from config import (
+    TOKEN,
+    LOG_WEBHOOK,
+    CODEJAM_WEBHOOK,
+    CODEJAM_INFO_CHANNEL_WEBHOOK,
+)
+
 from .cache import TimedCache
 
-TOKEN = os.environ.get("TOKEN")
-LOG_WEBHOOK = os.environ.get("LOG_WEBHOOK")
-CODEJAM_WEBHOOK = os.environ.get("CODEJAM_WEBHOOK")
-CODEJAM_INFO_CHANNEL_WEBHOOK = os.environ.get("CODEJAM_INFO_CHANNEL_WEBHOOK")
 class Discord:
     ROOT = "https://discord.com/api/"
 
@@ -122,7 +119,7 @@ HELPER_ID: int = 541272748161499147
 MOD_ID: int = 511332506780434438
 ADMIN_ID: int = 580911082290282506
 TIM_ID: int = 511334601977888798
-CHALLENGE_HOST: int = 713170076148433017
+CHALLENGE_HOST: int = 958740430772654110
 VERIFIED_ID: int = 612391389086351363
 
 ALL_ROLES = {
