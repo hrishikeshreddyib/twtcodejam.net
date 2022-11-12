@@ -24,7 +24,7 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOST")]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(", ")
 
 # Discord stuff
 TOKEN: str = os.environ.get("TOKEN")  # > https://discord.com/developers/applications
