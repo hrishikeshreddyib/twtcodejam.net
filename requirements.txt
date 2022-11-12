@@ -1,5 +1,6 @@
 django-markdownify
 django-allauth==0.45.0
+importlib-metadata==4.13.0
 django
 django-crispy-forms
 martor
