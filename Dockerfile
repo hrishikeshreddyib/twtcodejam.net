@@ -1,4 +1,4 @@
-FROM python:3.7-buster
+FROM python:3.9-buster
 
 RUN apt-get update && apt-get install nginx -y --no-install-recommends
 COPY nginx.default /etc/nginx/sites-available/default
