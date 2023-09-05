@@ -1,30 +1,18 @@
-import dotenv
 import os
-import urllib.parse as urlparse
+
+import dj_database_url
+import dotenv
 
 dotenv.load_dotenv()
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
-
-url = urlparse.urlparse(os.environ["DATABASE_URL"])  # os.environ['DATABASE_URL']
-dbname = url.path[1:]
-user = url.username
-password = url.password
-host = url.hostname
-port = url.port
-
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",  # your database
-        "NAME": str(dbname),
-        "USER": user,
-        "PASSWORD": password,
-        "HOST": host,
-        "PORT": port,
-    }
+    "default": dj_database_url.config(
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(", ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 # Discord stuff
 TOKEN: str = os.environ.get("TOKEN")  # > https://discord.com/developers/applications

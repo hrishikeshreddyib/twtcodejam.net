@@ -7,5 +7,6 @@ martor
 sentry-sdk
 gunicorn
 python-dotenv
+dj-database-url
 psycopg2; platform_system == "Windows"
 psycopg2-binary; sys_platform == "linux"
